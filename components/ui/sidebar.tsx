@@ -1,7 +1,17 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { BookOpenIcon, FireIcon, HashtagIcon } from "@heroicons/react/16/solid";
-import { BookmarkFilledIcon, ListBulletIcon } from "@radix-ui/react-icons";
+import {
+  BoltIcon,
+  BookOpenIcon,
+  FireIcon,
+  HashtagIcon,
+} from "@heroicons/react/24/outline";
+import {
+  BookmarkFilledIcon,
+  BookmarkIcon,
+  ListBulletIcon,
+} from "@radix-ui/react-icons";
+import Link from "next/link";
 
 export function Sidebar({ className }: any) {
   return (
@@ -31,14 +41,22 @@ export function Sidebar({ className }: any) {
             Library
           </h2>
           <div className="space-y-1">
+            <Link href="/library">
+              <Button variant="ghost" className="w-full justify-start">
+                <ListBulletIcon className="mr-2 h-4 w-4" />
+                Your Stories
+              </Button>
+            </Link>
             <Button variant="ghost" className="w-full justify-start">
-              <ListBulletIcon className="mr-2 h-4 w-4" />
-              Your Stories
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
-              <BookmarkFilledIcon className="mr-2 h-4 w-4" />
+              <BookmarkIcon className="mr-2 h-4 w-4" />
               Saved Stories
             </Button>
+            <Link href="/app/generate-character">
+              <Button variant="ghost" className="w-full justify-start">
+                <BoltIcon className="mr-2 h-4 w-4" />
+                Quick Generate Character
+              </Button>
+            </Link>
           </div>
         </div>
 
