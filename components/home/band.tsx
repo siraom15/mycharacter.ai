@@ -4,11 +4,11 @@ import { BandWave } from "./band-wave";
 export function Band() {
   return (
     <>
-      <section className="flex justify-between items-center flex-row w-full bg-coral-red">
+      <section className="mx-auto flex flex-row items-center justify-center gap-10 align-middle w-2/3">
         <div className="flex flex-1 flex-col">
-          <h2 className="capitalize text-4xl lg:max-w-lg font-bold text-white">
+          <h2 className="font-palanquin capitalize text-4xl lg:max-w-lg font-bold">
             Create your
-            <span className="text-coral-red-hover"> Imagine </span>
+            <span className="text-coral-red"> Imagine </span>
             <span className="text-coral-red"> Character </span> With AI
             Technology
           </h2>
@@ -45,7 +45,7 @@ export function Band() {
           <img
             alt="man image"
             src="img/man_remove_bg.png"
-            className="object-contain h-1/2 w-96 rounded-full"
+            className="object-contain h-1/2 w-96 rounded-full border-2 border-coral-red shadow-coral-red shadow-lg"
           />
           <span className="absolute bg-coral-red rounded-full p-5 text-white text-sm bottom-10">
             <span className="text-base font-bold">Alex</span> <br />A handsome
@@ -54,7 +54,6 @@ export function Band() {
           </span>
         </div>
       </section>
-      <BandWave />
     </>
   );
 }

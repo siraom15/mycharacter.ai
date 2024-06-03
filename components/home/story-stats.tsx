@@ -1,15 +1,21 @@
+"use client";
+import { StoryWaveBottom } from "./story-wave-bottom";
+import { StoryWaveTop } from "./story-wave-top";
+import CountUp from "react-countup";
+
 export function StoryStats() {
   return (
     <>
-      <div className="mx-auto flex flex-row items-center justify-center gap-10 align-middle w-full mt-5">
+      <StoryWaveTop />
+      <div className="mx-auto flex flex-row items-center justify-center gap-10 align-middle w-full bg-coral-red">
         <div className="flex flex-col justify-center items-center relative">
           <img
             src="/img/demo1.png"
             className="object-contain h-auto w-full rounded-full"
           />
-          <span className="bg-coral-red rounded-full p-5 text-white text-sm absolute bottom-1 info-text">
-            <span className="text-base font-bold">Marry</span> <br />
-            little girl,red hood,blonde hair,innocent looking,short girl
+          <span className="bg-white rounded-full p-5 text-coral-red text-sm absolute bottom-1 info-text">
+            <span className="text-lg font-bold">Marry</span> <br />
+            "little girl,red hood,blonde hair,innocent looking,short girl"
           </span>
         </div>
 
@@ -19,29 +25,36 @@ export function StoryStats() {
               Our
             </span>
             <br />
-            <span className="text-coral-red inline-block mt-3">Public </span>
+            <span className="text-white inline-block mt-3">Public </span>
             <br />
             Stories
           </h1>
-          <p className="font-montserrat text-slate-gray text-lg leading-8 mt-6 mb-14 sm:max-w-sm dark:text-white">
+          <p className="font-montserrat text-white text-lg leading-8 mt-6 mb-14 sm:max-w-sm dark:text-white">
             Discover stories from our community of creators.
           </p>
           <div className="flex justify-start items-start flex-wrap w-full gap-16">
             <div>
-              <p className="text-4xl font-palanquin font-bold">{0}</p>
+              <p className="text-4xl font-palanquin font-bold">
+                <CountUp end={200} />
+              </p>
               <p className="leading-7 font-montserrat">Stories</p>
             </div>
             <div>
-              <p className="text-4xl font-palanquin font-bold">{0}</p>
+              <p className="text-4xl font-palanquin font-bold">
+                <CountUp end={3999} />
+              </p>
               <p className="leading-7 font-montserrat">Character</p>
             </div>
             <div>
-              <p className="text-4xl font-palanquin font-bold">{0}</p>
+              <p className="text-4xl font-palanquin font-bold">
+                <CountUp end={842} />
+              </p>
               <p className="leading-7 font-montserrat">User</p>
             </div>
           </div>
         </div>
       </div>
+      <StoryWaveBottom />
     </>
   );
 }
