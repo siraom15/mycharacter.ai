@@ -20,6 +20,7 @@ const config = {
     extend: {
       colors: {
         'coral-red': '#FF6452',
+        'coral-red-light': '#ff988c',
         'coral-red-hover': '#FF5452',
         'slate-gray': '#6D6D6D',
         'pale-blue': '#F5F6FF',
