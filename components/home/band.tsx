@@ -25,12 +25,12 @@ export function Band() {
           </p>
           <div className="mt-11">
             <div className="flex text-sm gap-2">
-              <button className="flex justify-center items-center gap-2 px-7 py-4 border font-montserrat text-lg leading-none bg-coral-red text-white border-coral-red rounded-full">
+              <button className="flex justify-center items-center gap-2 px-7 py-4 border font-montserrat text-lg leading-none bg-coral-red text-white border-coral-red rounded-full hover:bg-coral-red-light hover:border-coral-red-light">
                 Explore Now
               </button>
 
-              <button className="flex justify-center items-center gap-2 px-7 py-4 border font-montserrat text-lg leading-none bg-coral-red text-white border-coral-red rounded-full">
-                Create your own
+              <button className="flex justify-center items-center gap-2 px-7 py-4 border font-montserrat text-lg leading-none bg-coral-red text-white border-coral-red rounded-full hover:bg-coral-red-light hover:border-coral-red-light">
+                Try Now
               </button>
             </div>
           </div>
@@ -42,9 +42,11 @@ export function Band() {
         </div>
 
         <div className="relative flex-1 flex justify-center items-center">
-          <img
+          <Image
+            width={500}
+            height={500}
             alt="man image"
-            src="img/man_remove_bg.png"
+            src="/img/man_remove_bg.png"
             className="object-contain h-1/2 w-96 rounded-full border-2 border-coral-red shadow-coral-red shadow-lg"
           />
           <span className="absolute bg-coral-red rounded-full p-5 text-white text-sm bottom-10">
