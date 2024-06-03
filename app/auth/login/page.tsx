@@ -1,4 +1,4 @@
-import { CardDemo } from "./card-demo";
+import { CardDemo } from "../card-demo";
 
 export default function Login() {
   return (

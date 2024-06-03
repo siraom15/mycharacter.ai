@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Band } from "../components/home/band";
 import { StoryStats } from "@/components/home/story-stats";
 
