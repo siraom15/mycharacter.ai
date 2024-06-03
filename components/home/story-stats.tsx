@@ -11,7 +11,7 @@ export function StoryStats() {
         <div className="flex flex-col justify-center items-center relative">
           <img
             src="/img/demo1.png"
-            className="object-contain h-auto w-full rounded-full"
+            className="object-contain h-auto w-full rounded-full border-2 border-white shadow-white shadow-lg"
           />
           <span className="bg-white rounded-full p-5 text-coral-red text-sm absolute bottom-1 info-text">
             <span className="text-lg font-bold">Marry</span> <br />
@@ -33,23 +33,23 @@ export function StoryStats() {
             Discover stories from our community of creators.
           </p>
           <div className="flex justify-start items-start flex-wrap w-full gap-16">
-            <div>
+            <div className="text-white">
               <p className="text-4xl font-palanquin font-bold">
                 <CountUp end={200} />
               </p>
-              <p className="leading-7 font-montserrat">Stories</p>
+              <p className="leading-7 font-montserrat text-white">Stories</p>
             </div>
-            <div>
+            <div className="text-white">
               <p className="text-4xl font-palanquin font-bold">
                 <CountUp end={3999} />
               </p>
-              <p className="leading-7 font-montserrat">Character</p>
+              <p className="leading-7 font-montserrat text-white">Character</p>
             </div>
-            <div>
+            <div className="text-white">
               <p className="text-4xl font-palanquin font-bold">
                 <CountUp end={842} />
               </p>
-              <p className="leading-7 font-montserrat">User</p>
+              <p className="leading-7 font-montserrat text-white">User</p>
             </div>
           </div>
         </div>
