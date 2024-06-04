@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/ui/navbar";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "MyCharacter.AI",
@@ -15,8 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen">
+        <main>
         <Navbar />
         {children}
+        </main>
+        <Toaster />
       </body>
     </html>
   );

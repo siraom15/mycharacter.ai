@@ -13,25 +13,65 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ButtonLoading } from "../story/button-loading";
+import Image from "next/image";
+import { useToast } from "../ui/use-toast";
+import { ToastAction } from "../ui/toast";
 
 export function GenerateCharacter() {
   const [prompt, setPrompt] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [resultImageBase64, setResultImageBase64] = useState<string>("");
+  const [copyPrompt, setCopyPrompt] = useState("");
+  const { toast } = useToast();
 
-  const handleGenerateCharacter = () => {
-    setIsLoading(true);
-    generateCharacter();
+  const parseBase64ToImage = (base64: string): string => {
+    return base64 ? `data:image/png;base64,${base64}` : "";
   };
 
-  const generateCharacter = () => {
-    // Implement your logic here
-    // After the character is generated, set isLoading to false
-    // Example:
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
+  const generateCharacter = async (e: Event) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const url = process.env.NEXT_PUBLIC_WIZMODEL_TXT2IMG_API_ENDPOINT || "";
+    console.log("url", url);
+
+    const data = {
+      prompt: prompt,
+      steps: 100,
+    };
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_WIZMODEL_TOKEN}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+    console.log(result);
+    const image = result.images[0];
+    setResultImageBase64(image);
+    setIsLoading(false);
+    setCopyPrompt(prompt);
+    setPrompt("");
+  };
+
+  const handleGenerateCharacter = (e: Event) => {
+    if (!prompt) {
+      console.log('show toast');
+      
+      toast({
+        variant: "destructive",
+        title: "Prompt is required",
+        description: "Please input a prompt to generate a character.",
+      })
+      return;
+    }
+    setIsLoading(true);
+    generateCharacter(e);
   };
 
   return (
@@ -57,6 +97,16 @@ export function GenerateCharacter() {
                 <br />
                 Example prompt: "A character who is a detective and has a pet
                 cat."
+                {resultImageBase64 && (
+                  <Image
+                    src={parseBase64ToImage(resultImageBase64)}
+                    alt="Generated Character"
+                    className="w-96"
+                    width={200}
+                    height={200}
+                  />
+                )}
+                {resultImageBase64 && copyPrompt}
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
