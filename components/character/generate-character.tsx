@@ -95,8 +95,8 @@ export function GenerateCharacter() {
               <DialogDescription>
                 Write a prompt to generate a new character.
                 <br />
-                Example prompt: "A character who is a detective and has a pet
-                cat."
+                Example prompt: &quot;A character who is a detective and has a pet
+                cat.&quot;
                 {resultImageBase64 && (
                   <Image
                     src={parseBase64ToImage(resultImageBase64)}
