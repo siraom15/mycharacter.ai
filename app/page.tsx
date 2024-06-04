@@ -5,7 +5,6 @@ import { StoryStats } from "@/components/home/story-stats";
 export default function Home() {
   return (
     <>
-      <Navbar />
       <div className="mx-auto flex flex-col items-center justify-center w-full">
         <div className="w-full max-w-full flex flex-col items-center justify-center">
           <Band />
