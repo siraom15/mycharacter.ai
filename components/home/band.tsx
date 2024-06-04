@@ -48,8 +48,8 @@ export function Band() {
             width={500}
             height={500}
             alt="man image"
-            src="/img/man_remove_bg.png"
-            className="object-contain h-1/2 w-96 rounded-full border-2 border-coral-red shadow-coral-red shadow-lg"
+            src="/img/man.png"
+            className="object-contain h-1/2 w-96 rounded-full border-2 border-coral-red shadow-coral-red shadow-2xl"
           />
           <span className="absolute bg-coral-red rounded-full p-5 text-white text-sm bottom-10">
             <span className="text-base font-bold">Alex</span> <br />A handsome

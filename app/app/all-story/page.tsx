@@ -1,8 +1,15 @@
 import { StoryCard } from "@/components/story/story-card";
 import { StoryEmptyPlaceholder } from "@/components/story/story-empty-placeholder";
 import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
 
 const stories = [
+  {
+    id: 0,
+    name: "Harry Potter: Order of the Phoenix",
+    cover: "/img/harry-oop.jpeg",
+    owner: "Aommie",
+  },
   {
     id: 1,
     name: "The Story of the Story",
@@ -33,7 +40,7 @@ const stories = [
     cover: "/img/cover-2.png",
     owner: "Mark Zuckerberg",
   },
-]
+];
 
 export default function AllStory() {
   return (
@@ -53,14 +60,16 @@ export default function AllStory() {
         <div className="grid grid-cols-5 gap-4">
           {stories &&
             stories.map((story) => (
-              <StoryCard
-                key={story.id}
-                story={story}
-                className="w-[150px]"
-                aspectRatio="square"
-                width={150}
-                height={150}
-              />
+              <Link href={`/app/story/${story.id}`} key={story.id}>
+                <StoryCard
+                  key={story.id}
+                  story={story}
+                  className="w-[150px]"
+                  aspectRatio="square"
+                  width={150}
+                  height={150}
+                />
+              </Link>
             ))}
         </div>
         {/* <StoryEmptyPlaceholder /> */}
