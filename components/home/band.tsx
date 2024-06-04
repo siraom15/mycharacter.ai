@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { BandWave } from "./band-wave";
 import Link from "next/link";
 
 export function Band() {
@@ -26,7 +25,7 @@ export function Band() {
           </p>
           <div className="mt-11">
             <div className="flex text-sm gap-2">
-              <Link href="/home">
+              <Link href="/app">
                 <button className="flex justify-center items-center gap-2 px-7 py-4 border font-montserrat text-lg leading-none bg-coral-red text-white border-coral-red rounded-full hover:bg-coral-red-light hover:border-coral-red-light">
                   Explore Now
                 </button>
