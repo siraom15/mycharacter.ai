@@ -22,10 +22,12 @@ export function Sidebar({ className }: any) {
             Discover
           </h2>
           <div className="space-y-1">
+            <Link href="/app/all-story">
             <Button variant="secondary" className="w-full justify-start">
               <BookOpenIcon className="mr-2 h-4 w-4" />
               All Stories
             </Button>
+            </Link>
             <Button variant="ghost" className="w-full justify-start">
               <FireIcon className="mr-2 h-4 w-4 text-yellow-500" />
               Trending Story

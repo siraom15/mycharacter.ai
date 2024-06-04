@@ -25,7 +25,7 @@ export function Band() {
           </p>
           <div className="mt-11">
             <div className="flex text-sm gap-2">
-              <Link href="/app">
+              <Link href="/app/all-story">
                 <button className="flex justify-center items-center gap-2 px-7 py-4 border font-montserrat text-lg leading-none bg-coral-red text-white border-coral-red rounded-full hover:bg-coral-red-light hover:border-coral-red-light">
                   Explore Now
                 </button>
