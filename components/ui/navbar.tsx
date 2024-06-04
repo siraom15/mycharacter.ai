@@ -5,7 +5,7 @@ export function Navbar() {
         MyCharacter.AI
       </a>
       <div className="flex gap-4">
-        <a href="/login" className="text-base">
+        <a href="/auth/login" className="text-base">
           Login
         </a>
       </div>

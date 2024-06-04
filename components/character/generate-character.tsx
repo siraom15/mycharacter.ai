@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { useMemo, useState } from "react";
-import { ButtonLoading } from "../story/button-loading";
+import { ButtonLoading } from "../ui/button-loading";
 import Image from "next/image";
 import { useToast } from "../ui/use-toast";
 import { ToastAction } from "../ui/toast";
@@ -33,7 +33,7 @@ export function GenerateCharacter() {
   const generateCharacter = async (e: Event) => {
     e.preventDefault();
     setIsLoading(true);
-    const url = process.env.NEXT_PUBLIC_WIZMODEL_TXT2IMG_API_ENDPOINT || "";
+    const url = process.env.NEXT_PUBLIC_WIZMODEL_TXT2IMG_API_ENDPOINT as string;
     console.log("url", url);
 
     const data = {
@@ -45,7 +45,7 @@ export function GenerateCharacter() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_WIZMODEL_TOKEN}`,
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_WIZMODEL_TOKEN as string}`,
       },
       body: JSON.stringify(data),
     });
