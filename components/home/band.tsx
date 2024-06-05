@@ -6,7 +6,9 @@ export function Band() {
     <>
       <section className="mx-auto flex flex-row items-center justify-center gap-10 align-middle w-2/3">
         <div className="flex flex-1 flex-col">
-          <p className="mt-6 lg:max-w-lg font-bold bg-gradient-to-r from-cyan-300 to-violet-400 text-transparent bg-clip-text">MyCharacter.AI</p>
+          <p className="mt-6 lg:max-w-lg font-bold bg-gradient-to-r from-cyan-300 to-violet-400 text-transparent bg-clip-text">
+            MyCharacter.AI
+          </p>
           <h2 className="font-palanquin capitalize text-6xl lg:max-w-lg font-bold text-custom-black">
             Create your
             <br />
@@ -25,8 +27,11 @@ export function Band() {
           <p className="mt-6 lg:max-w-lg">
             You can create your own story and share it with other people. You
             can
-            <span className="text-coral-red  bg-gradient-to-r from-cyan-300 to-violet-400 text-transparent bg-clip-text"> explore </span> the character that
-            has been created by other people.
+            <span className="text-coral-red  bg-gradient-to-r from-cyan-300 to-violet-400 text-transparent bg-clip-text">
+              {" "}
+              explore{" "}
+            </span>{" "}
+            the character that has been created by other people.
           </p>
           <div className="mt-11">
             <div className="flex text-sm gap-2">
@@ -39,11 +44,6 @@ export function Band() {
               <button className="flex justify-center items-center gap-2 px-7 py-4 border font-montserrat text-lg leading-none bg-coral-red text-white border-coral-red rounded-full hover:bg-coral-red-light hover:border-coral-red-light bg-gradient-to-r from-rose-400 to-red-500 hover:bg-gradient-to-l">
                 Try Now
               </button>
-            </div>
-          </div>
-          <div className="mt-2">
-            <div className="flex text-sm gap-2">
-              <p>Try to generate character</p>
             </div>
           </div>
         </div>
