@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/ui/navbar";
 import { Toaster } from "@/components/ui/toaster";
-import { Prompt, Montserrat } from "next/font/google";
+import { Prompt, Montserrat, Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -12,11 +12,15 @@ export const metadata: Metadata = {
 
 const prompt = Prompt({
   subsets: ["latin"],
-  weight: "400",
+  weight: "500",
 });
 const montserrat = Montserrat({
   subsets: ["latin"],
-  weight: "400",
+  weight: "600",
+});
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: "600",
 });
 
 export default function RootLayout({

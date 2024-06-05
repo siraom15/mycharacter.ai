@@ -43,10 +43,10 @@ export function Sidebar({ className }: any) {
             Library
           </h2>
           <div className="space-y-1">
-            <Link href="/library">
+            <Link href="/app/my-story">
               <Button variant="ghost" className="w-full justify-start">
                 <ListBulletIcon className="mr-2 h-4 w-4" />
-                Your Stories
+                My Stories
               </Button>
             </Link>
             <Button variant="ghost" className="w-full justify-start">

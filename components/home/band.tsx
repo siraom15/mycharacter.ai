@@ -14,7 +14,7 @@ export function Band() {
             <br />
             {/* <span className="bg-gradient-to-r from-rose-400 to-red-500 bg-clip-text inline-block text-transparent"> Imagine &nbsp;</span>
             <span className="bg-gradient-to-r from-rose-400 to-red-500 bg-clip-text inline-block text-transparent"> Character </span>  */}
-            <span className="relative text-5xl md:text-6xl md:leading-tight font-extrabold md:text-center leading-tight text-transparent bg-clip-text bg-gradient-to-l from-rose-500 to-red-500 mb-6">
+            <span className="relative text-5xl md:text-6xl md:leading-tight font-extrabold md:text-center leading-tight text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-red-500 mb-6">
               Imagine Character
             </span>
             <br />
