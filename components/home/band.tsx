@@ -51,18 +51,18 @@ export function Band() {
         <div className="relative flex-1 flex justify-center items-center ">
           <div className="overflow-hidden rounded-full border-2 border-rose-400 shadow-rose-400 shadow-2xl bg-coral-red bg-gradient-to-r from-rose-400 to-red-500 ">
             <Image
-              width={500}
-              height={500}
+              width={1000}
+              height={1000}
               alt="man image"
-              src="/img/man_remove_bg.png"
-              className="transition-all hover:scale-105 object-contain h-1/2 w-96 "
+              src="/img/demo1.png"
+              className="transition-all hover:scale-105 object-contain"
             />
           </div>
 
           <span className="absolute bg-white rounded-full p-5 text-coral-red text-sm bottom-10">
-            <span className="text-base font-bold">Alex</span> <br />A handsome
-            guy wearing a glasses <br />
-            black suit, his hand holding a necktie
+            <span className="text-base font-bold">Marry</span> <br />
+            A little girl, red hood blonde hair innocent looking short
+            girl
           </span>
         </div>
       </section>
