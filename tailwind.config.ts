@@ -25,6 +25,7 @@ const config = {
         'slate-gray': '#6D6D6D',
         'pale-blue': '#F5F6FF',
         'white-400': 'rgba(255, 255, 255, 0.80)',
+        'custom-black': '#0d0d0d',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
