@@ -11,10 +11,10 @@ export type Story = {
 export const stories: Story[] = [];
 
 export type Character = {
-    id: string;
+    id: string | number;
     name: string;
     prompt: string;
-    image: string;
+    cover: string;
     // story: string;
 }
 
