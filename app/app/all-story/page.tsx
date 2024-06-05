@@ -1,48 +1,15 @@
+"use client";
+
+import useStories from "@/app/hooks/useStories";
 import { StoryCard } from "@/components/story/story-card";
 import { StoryEmptyPlaceholder } from "@/components/story/story-empty-placeholder";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 
-const stories = [
-  {
-    id: 0,
-    name: "Harry Potter: Order of the Phoenix",
-    cover: "/img/harry-oop.jpeg",
-    owner: "Aommie",
-  },
-  {
-    id: 1,
-    name: "The Story of the Story",
-    cover: "/img/cover-1.png",
-    owner: "Mark Zuckerberg",
-  },
-  {
-    id: 2,
-    name: "A lover of the Story",
-    cover: "/img/cover-2.png",
-    owner: "James Bond",
-  },
-  {
-    id: 3,
-    name: "The cat life",
-    cover: "/img/cover-3.png",
-    owner: "Cat",
-  },
-  {
-    id: 4,
-    name: "The Story of the Story",
-    cover: "/img/cover-1.png",
-    owner: "Mark Zuckerberg",
-  },
-  {
-    id: 5,
-    name: "The Story of the Story",
-    cover: "/img/cover-2.png",
-    owner: "Mark Zuckerberg",
-  },
-];
-
 export default function AllStory() {
+  // fetch all stories
+  const { data: stories, isLoading, isError } = useStories();
+
   return (
     <div className="bg-white">
       <div className="p-4">
@@ -57,7 +24,7 @@ export default function AllStory() {
           </div>
         </div>
         <Separator className="my-4" />
-        <div className="grid grid-cols-5 gap-4">
+        <div className="grid grid-cols-6 gap-3">
           {stories &&
             stories.map((story) => (
               <Link href={`/app/story/${story.id}`} key={story.id}>
