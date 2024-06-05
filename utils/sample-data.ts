@@ -41,4 +41,13 @@ export const stories: Story[] = [
         views: 1900,
         characters: characters,
     },
+    {
+        id: 2,
+        name: "Harry Potter: Goblet of Fire",
+        cover: "/img/dummy.png",
+        owner: "Aommie",
+        likes: 300,
+        views: 2900,
+        characters: [],
+    }
 ];
