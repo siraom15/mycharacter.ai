@@ -30,7 +30,8 @@ const ImageWithDescription = () => (
     />
     <span className="bg-white rounded-full p-5 text-coral-red text-sm absolute bottom-1 info-text">
       <span className="text-lg font-bold">Marry</span> <br />
-      &quot;little girl, red hood, blonde hair, innocent looking, short girl&quot;
+      &quot;little girl, red hood, blonde hair, innocent looking, short
+      girl&quot;
     </span>
   </div>
 );
@@ -39,15 +40,15 @@ export function StoryStats() {
   return (
     <>
       <StoryWaveTop />
-      <div className="mx-auto flex flex-row items-center justify-center gap-10 align-middle w-full bg-coral-red">
+      <div className="mx-auto flex flex-row items-center justify-center gap-10 align-middle w-full bg-rose-400 p-10">
         <ImageWithDescription />
         <div className="relative xl:w-2/5 flex flex-col items-start h-full">
-          <h1 className="mt-10 text-5xl font-bold">
-            <span className="xl:whitespace-nowrap relative z-10 pr-10">
+          <h1 className="mt-10 text-5xl font-bold text-white">
+            <span className="xl:whitespace-nowrap relative z-10 pr-10 text-white">
               Our
             </span>
             <br />
-            <span className="text-white inline-block mt-3">Public</span>
+            <span className="inline-block mt-3">Public </span>
             <br />
             Stories
           </h1>
