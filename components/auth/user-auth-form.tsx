@@ -56,7 +56,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         </div>
 
         <div className="flex gap-2">
-          <p>Don't have an account?</p>
+          <p>Don&apos;t have an account?</p>
           <Link href="/auth/signup">
             <p className="underline underline-offset-4 bg-gradient-to-r from-cyan-400 to-violet-400 text-transparent bg-clip-text">
               Sign up
