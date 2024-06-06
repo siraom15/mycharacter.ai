@@ -36,12 +36,12 @@ export function Band() {
           <div className="mt-11">
             <div className="flex text-sm gap-2">
               <Link href="/app/all-story">
-                <button className="flex justify-center items-center gap-2 px-7 py-4 border font-montserrat text-lg leading-none bg-coral-red text-white border-coral-red rounded-full hover:bg-coral-red-light hover:border-coral-red-light bg-gradient-to-r from-rose-400 to-red-500 hover:bg-gradient-to-l">
+                <button className="flex justify-center items-center gap-2 px-7 py-4 border  text-lg leading-none bg-coral-red text-white border-coral-red rounded-full hover:bg-coral-red-light hover:border-coral-red-light bg-gradient-to-r from-rose-400 to-red-500 hover:bg-gradient-to-l">
                   Explore Now
                 </button>
               </Link>
 
-              <button className="flex justify-center items-center gap-2 px-7 py-4 border font-montserrat text-lg leading-none bg-coral-red text-white border-coral-red rounded-full hover:bg-coral-red-light hover:border-coral-red-light bg-gradient-to-r from-rose-400 to-red-500 hover:bg-gradient-to-l">
+              <button className="flex justify-center items-center gap-2 px-7 py-4 border  text-lg leading-none bg-coral-red text-white border-coral-red rounded-full hover:bg-coral-red-light hover:border-coral-red-light bg-gradient-to-r from-rose-400 to-red-500 hover:bg-gradient-to-l">
                 Try Now
               </button>
             </div>
@@ -60,9 +60,8 @@ export function Band() {
           </div>
 
           <span className="absolute bg-white rounded-full p-5 text-coral-red text-sm bottom-10">
-            <span className="text-base font-bold">Marry</span> <br />
-            A little girl, red hood blonde hair innocent looking short
-            girl
+            <span className="text-base font-bold">Marry</span> <br />A little
+            girl, red hood blonde hair innocent looking short girl
           </span>
         </div>
       </section>

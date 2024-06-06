@@ -8,12 +8,12 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "../ui/separator";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { login } from "@/app/auth/login/action";
 import Link from "next/link";
+import { signup } from "@/app/auth/signup/action";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+export function UserSignupForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   return (
@@ -39,27 +39,20 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             required
           />
         </div>
-        {/* <p>
-          <Link href="/auth/forgot-password">
-            <p className="text-primary underline underline-offset-4 hover:text-accent">
-              Forgot password?
-            </p>
-          </Link>
-        </p> */}
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Button
             className="border-coral-red rounded-full hover:bg-coral-red-light hover:border-coral-red-light bg-gradient-to-r from-rose-400 to-red-500 hover:bg-gradient-to-l"
-            formAction={login}
+            formAction={signup}
           >
-            Sign in
+            Sign Up
           </Button>
         </div>
 
         <div className="flex gap-2">
-          <p>Don't have an account?</p>
-          <Link href="/auth/signup">
+          <p>Already signup?</p>
+          <Link href="/auth/login">
             <p className="underline underline-offset-4 bg-gradient-to-r from-cyan-400 to-violet-400 text-transparent bg-clip-text">
-              Sign up
+              Sign In
             </p>
           </Link>
         </div>
