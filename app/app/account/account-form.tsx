@@ -2,6 +2,18 @@
 import { useCallback, useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { type User } from "@supabase/supabase-js";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { ButtonLoading } from "@/components/ui/button-loading";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function AccountForm({ user }: { user: User | null }) {
   const supabase = createClient();
@@ -10,6 +22,7 @@ export default function AccountForm({ user }: { user: User | null }) {
   const [username, setUsername] = useState<string | null>(null);
   const [website, setWebsite] = useState<string | null>(null);
   const [avatar_url, setAvatarUrl] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const getProfile = useCallback(async () => {
     try {
@@ -33,7 +46,11 @@ export default function AccountForm({ user }: { user: User | null }) {
         setAvatarUrl(data.avatar_url);
       }
     } catch (error) {
-      alert("Error loading user data!");
+      toast({
+        variant: "destructive",
+        title: "Error fetching profile",
+        description: "Please try again later.",
+      });
     } finally {
       setLoading(false);
     }
@@ -65,67 +82,77 @@ export default function AccountForm({ user }: { user: User | null }) {
         updated_at: new Date().toISOString(),
       });
       if (error) throw error;
-      alert("Profile updated!");
+      toast({
+        variant: "default",
+        title: "Profile updated",
+        description: "Your profile has been updated.",
+      })
     } catch (error) {
-      alert("Error updating the data!");
+      toast({
+        variant: "destructive",
+        title: "Error updating the data",
+        description: "Please try again later.",
+      });
+      console.log(error);
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="form-widget">
-      <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" type="text" value={user?.email} disabled />
-      </div>
-      <div>
-        <label htmlFor="fullName">Full Name</label>
-        <input
-          id="fullName"
-          type="text"
-          value={fullname || ""}
-          onChange={(e) => setFullname(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          id="username"
-          type="text"
-          value={username || ""}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="website">Website</label>
-        <input
-          id="website"
-          type="url"
-          value={website || ""}
-          onChange={(e) => setWebsite(e.target.value)}
-        />
-      </div>
+    <>
+      <div className="space-y-8">
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            type="email"
+            id="email"
+            placeholder="Email"
+            value={user?.email}
+            disabled
+          />
+        </div>
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="email">Full Name</Label>
+          <Input
+            id="username"
+            type="text"
+            value={username || ""}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="email">Username</Label>
+          <Input
+            id="username"
+            type="text"
+            value={username || ""}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
 
-      <div>
-        <button
-          className="button primary block"
-          onClick={() =>
-            updateProfile({ fullname, username, website, avatar_url })
-          }
-          disabled={loading}
-        >
-          {loading ? "Loading ..." : "Update"}
-        </button>
-      </div>
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="email">Website</Label>
+          <Input
+            id="website"
+            type="url"
+            value={website || ""}
+            onChange={(e) => setWebsite(e.target.value)}
+          />
+        </div>
 
-      <div>
-        <form action="/auth/signout" method="post">
-          <button className="button block" type="submit">
-            Sign out
-          </button>
-        </form>
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <ButtonLoading
+            onClick={() =>
+              updateProfile({ fullname, username, website, avatar_url })
+            }
+            disabled={loading}
+            isLoading={loading}
+          >
+            Update
+          </ButtonLoading>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
