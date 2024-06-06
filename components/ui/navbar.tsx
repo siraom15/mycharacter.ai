@@ -1,4 +1,7 @@
-export function Navbar() {
+import Link from "next/link";
+import { Button } from "./button";
+
+export function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (
     <div className="mx-auto flex justify-between p-2 sticky top-0 z-50 backdrop-blur-sm bg-white/30">
       <a
@@ -7,11 +10,19 @@ export function Navbar() {
       >
         MyCharacter.AI
       </a>
-      {/* <div className="flex gap-4">
-        <a href="/login" className="text-base">
-          Login
-        </a>
-      </div> */}
+      <div className="flex gap-4">
+        {isLoggedIn ? (
+          <form action="/auth/signout" method="post">
+            <Button type="submit">
+              Sign out
+            </Button>
+          </form>
+        ) : (
+          <Link href="/auth/login">
+            <Button>Login</Button>
+          </Link>
+        )}
+      </div>
     </div>
   );
 }
