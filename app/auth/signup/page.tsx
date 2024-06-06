@@ -5,13 +5,14 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { UserAuthForm } from "@/components/auth/user-auth-form";
+import { UserSignupForm } from "@/components/auth/user-signup-form";
 
 export const metadata: Metadata = {
-  title: "Authentication",
+  title: "Signup | MyCharacter.AI",
   description: "Authentication forms built using the components.",
 };
 
-export default function AuthenticationPage() {
+export default function SignupPage() {
   return (
     <>
       <div className="container relative hidden h-[800px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
@@ -25,13 +26,13 @@ export default function AuthenticationPage() {
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
-                Signin to MyCharacter.AI
+                Signup to MyCharacter.AI
               </h1>
               <p className="text-sm text-muted-foreground">
                 Continue with your email or Google to get started.
               </p>
             </div>
-            <UserAuthForm />
+            <UserSignupForm />
             <p className="px-8 text-center text-sm text-muted-foreground">
               By clicking continue, you agree to our{" "}
               <Link

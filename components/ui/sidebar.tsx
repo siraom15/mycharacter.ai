@@ -1,10 +1,14 @@
+"use client"
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
+  ArrowLeftStartOnRectangleIcon,
   BoltIcon,
   BookOpenIcon,
   FireIcon,
   HashtagIcon,
+  UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import {
   BookmarkFilledIcon,
@@ -12,8 +16,16 @@ import {
   ListBulletIcon,
 } from "@radix-ui/react-icons";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-export function Sidebar({ className }: any) {
+interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
+
+}
+
+export function Sidebar({ className, ...props }: SidebarProps) {
+
+  const pathname = usePathname()
+  
   return (
     <div className={cn("pb-12", className)}>
       <div className="space-y-4 py-4">
@@ -23,10 +35,10 @@ export function Sidebar({ className }: any) {
           </h2>
           <div className="space-y-1">
             <Link href="/app/all-story">
-            <Button variant="secondary" className="w-full justify-start">
-              <BookOpenIcon className="mr-2 h-4 w-4" />
-              All Stories
-            </Button>
+              <Button variant="secondary" className="w-full justify-start">
+                <BookOpenIcon className="mr-2 h-4 w-4" />
+                All Stories
+              </Button>
             </Link>
             <Button variant="ghost" className="w-full justify-start">
               <FireIcon className="mr-2 h-4 w-4 text-yellow-500" />
@@ -74,6 +86,24 @@ export function Sidebar({ className }: any) {
             <Button variant="ghost" className="w-full justify-start">
               <HashtagIcon className="mr-2 h-4 w-4" />
               Sakura Love
+            </Button>
+          </div>
+        </div>
+
+        <div className="px-3 py-2">
+          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
+            Settings
+          </h2>
+          <div className="space-y-1">
+            <Link href="/app/account">
+              <Button variant="ghost" className="w-full justify-start">
+                <UserCircleIcon className="mr-2 h-4 w-4" />
+                Profile
+              </Button>
+            </Link>
+            <Button variant="ghost" className="w-full justify-start">
+              <ArrowLeftStartOnRectangleIcon className="mr-2 h-4 w-4" />
+              Signout
             </Button>
           </div>
         </div>

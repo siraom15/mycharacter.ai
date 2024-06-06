@@ -4,6 +4,7 @@ import { Navbar } from "@/components/ui/navbar";
 import { Toaster } from "@/components/ui/toaster";
 import { Prompt, Montserrat, Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { createClient } from "@/utils/supabase/server";
 
 export const metadata: Metadata = {
   title: "MyCharacter.AI",
@@ -23,16 +24,22 @@ const poppins = Poppins({
   weight: "600",
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
     <html lang="en">
       <body className={cn("min-h-screen")}>
         <main>
-          <Navbar />
+          <Navbar isLoggedIn={!!user} />
           {children}
         </main>
         <Toaster />

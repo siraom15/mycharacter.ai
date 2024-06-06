@@ -1,4 +1,13 @@
-export function Navbar() {
+import Link from "next/link";
+import { Button } from "./button";
+import { Icons } from "./icons";
+
+interface NavbarProps extends React.HTMLAttributes<HTMLElement> {
+  isLoggedIn: boolean;
+}
+
+export function Navbar({ isLoggedIn, ...props }: NavbarProps) {
+
   return (
     <div className="mx-auto flex justify-between p-2 sticky top-0 z-50 backdrop-blur-sm bg-white/30">
       <a
@@ -7,11 +16,22 @@ export function Navbar() {
       >
         MyCharacter.AI
       </a>
-      {/* <div className="flex gap-4">
-        <a href="/login" className="text-base">
-          Login
-        </a>
-      </div> */}
+      <div className="flex gap-4 items-center">
+        <Link href="https://github.com/siraom15/mycharacter.ai/" target="_blank">
+          <Icons.gitHub className="h-8 w-8" />
+        </Link>
+        {isLoggedIn ? (
+          <form action="/auth/signout" method="post">
+            <Button type="submit">Sign out</Button>
+          </form>
+        ) : (
+          <Link href="/app/all-story">
+            <Button className="border-coral-red rounded-full hover:bg-coral-red-light hover:border-coral-red-light bg-gradient-to-r from-cyan-300 to-violet-400 hover:bg-gradient-to-l">
+              App
+            </Button>
+          </Link>
+        )}
+      </div>
     </div>
   );
 }

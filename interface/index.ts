@@ -23,3 +23,10 @@ export const characters: Character[] = [];
 export type ResponseData = {
     message: string;
 }
+
+export type User = {
+    username: string | null;
+    fullname: string | null;
+    website: string | null;
+    avatar_url: string | null;
+}
