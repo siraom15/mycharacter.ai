@@ -10,7 +10,6 @@ export default function Home() {
       <StoryWaveBottom className="absolute top-[0] z-[-1]" />
       <div className="mx-auto flex flex-col items-center justify-center w-full">
         <div className="w-full max-w-full flex flex-col items-center justify-center">
-          
           <Band />
           <StoryStats />
         </div>

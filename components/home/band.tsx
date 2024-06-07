@@ -5,9 +5,9 @@ import { StoryWaveBottom } from "./story-wave-bottom";
 export function Band() {
   return (
     <>
-      <section className="mx-auto flex flex-row items-center justify-center gap-10 align-middle w-2/3 mt-10">
+      <section className="mx-auto flex flex-row items-center justify-center gap-10 align-middle w-2/3 mt-20">
         <div className="flex flex-1 flex-col">
-          <p className="mt-6 lg:max-w-lg font-bold bg-gradient-to-r from-teal-400 to-yellow-200 text-transparent bg-clip-text">
+          <p className="mt-6 lg:max-w-lg font-bold bg-gradient-to-r from-teal-800 to-yellow-800 text-transparent bg-clip-text">
             MyCharacter.AI
           </p>
           <h2 className="font-palanquin capitalize text-6xl lg:max-w-lg font-bold text-custom-black">
@@ -37,12 +37,12 @@ export function Band() {
           <div className="mt-11">
             <div className="flex text-sm gap-2">
               <Link href="/app/all-story">
-                <button className="flex justify-center items-center gap-2 px-7 py-4 text-lg leading-none text-white rounded-full bg-gradient-to-r from-teal-400 to-yellow-200 hover:bg-gradient-to-l hover:border-0">
+                <button className="flex justify-center items-center gap-2 px-7 py-4 text-lg leading-none text-teal-800 rounded-full bg-gradient-to-r from-teal-400 to-yellow-200 hover:bg-gradient-to-l font-semibold">
                   Explore Now
                 </button>
               </Link>
               <Link href="/app/all-story">
-                <button className="flex justify-center items-center gap-2 px-7 py-4 text-lg leading-none text-white rounded-full bg-gradient-to-r from-teal-400 to-yellow-200 hover:bg-gradient-to-l border-0">
+                <button className="flex justify-center items-center gap-2 px-7 py-4 text-lg leading-none text-teal-800 rounded-full bg-gradient-to-r from-teal-400 to-yellow-200 hover:bg-gradient-to-l font-semibold">
                   Get Started
                 </button>
               </Link>
