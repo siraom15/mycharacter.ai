@@ -9,7 +9,7 @@ interface NavbarProps extends React.HTMLAttributes<HTMLElement> {
 export function Navbar({ isLoggedIn, ...props }: NavbarProps) {
 
   return (
-    <div className="mx-auto flex justify-between p-2 sticky top-0 z-50 backdrop-blur-sm bg-white/30">
+    <div className="mx-auto flex justify-between p-2">
       <a
         href="/"
         className="text-xl font-bold items-center flex align-center bg-gradient-to-r from-cyan-300 to-violet-400 text-transparent bg-clip-text"
