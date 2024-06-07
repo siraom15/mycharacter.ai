@@ -12,7 +12,6 @@ export default async function AllStory() {
 
   return (
     <div className="p-4">
-      <pre>{JSON.stringify(stories, null, 2)}</pre>
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <h2 className="text-2xl font-semibold tracking-tight">All Stories</h2>

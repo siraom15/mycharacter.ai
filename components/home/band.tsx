@@ -1,12 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import { StoryWaveBottom } from "./story-wave-bottom";
 
 export function Band() {
   return (
     <>
-      <section className="mx-auto flex flex-row items-center justify-center gap-10 align-middle w-2/3">
+      <section className="mx-auto flex flex-row items-center justify-center gap-10 align-middle w-2/3 mt-20">
         <div className="flex flex-1 flex-col">
-          <p className="mt-6 lg:max-w-lg font-bold bg-gradient-to-r from-cyan-300 to-violet-400 text-transparent bg-clip-text">
+          <p className="mt-6 lg:max-w-lg font-bold bg-gradient-to-r from-teal-800 to-yellow-800 text-transparent bg-clip-text">
             MyCharacter.AI
           </p>
           <h2 className="font-palanquin capitalize text-6xl lg:max-w-lg font-bold text-custom-black">
@@ -14,7 +15,7 @@ export function Band() {
             <br />
             {/* <span className="bg-gradient-to-r from-rose-400 to-red-500 bg-clip-text inline-block text-transparent"> Imagine &nbsp;</span>
             <span className="bg-gradient-to-r from-rose-400 to-red-500 bg-clip-text inline-block text-transparent"> Character </span>  */}
-            <span className="relative text-5xl md:text-6xl md:leading-tight font-extrabold md:text-center leading-tight text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-red-500 mb-6">
+            <span className="relative text-5xl md:text-6xl md:leading-tight font-extrabold md:text-center leading-tight text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-yellow-200 mb-6">
               Imagine Character
             </span>
             <br />
@@ -36,20 +37,21 @@ export function Band() {
           <div className="mt-11">
             <div className="flex text-sm gap-2">
               <Link href="/app/all-story">
-                <button className="flex justify-center items-center gap-2 px-7 py-4 border  text-lg leading-none bg-coral-red text-white border-coral-red rounded-full hover:bg-coral-red-light hover:border-coral-red-light bg-gradient-to-r from-rose-400 to-red-500 hover:bg-gradient-to-l">
+                <button className="flex justify-center items-center gap-2 px-7 py-4 text-lg leading-none text-teal-800 rounded-full bg-gradient-to-r from-teal-400 to-yellow-200 hover:bg-gradient-to-l font-semibold">
                   Explore Now
                 </button>
               </Link>
-
-              <button className="flex justify-center items-center gap-2 px-7 py-4 border  text-lg leading-none bg-coral-red text-white border-coral-red rounded-full hover:bg-coral-red-light hover:border-coral-red-light bg-gradient-to-r from-rose-400 to-red-500 hover:bg-gradient-to-l">
-                Try Now
-              </button>
+              <Link href="/app/all-story">
+                <button className="flex justify-center items-center gap-2 px-7 py-4 text-lg leading-none text-teal-800 rounded-full bg-gradient-to-r from-teal-400 to-yellow-200 hover:bg-gradient-to-l font-semibold">
+                  Get Started
+                </button>
+              </Link>
             </div>
           </div>
         </div>
 
         <div className="relative flex-1 flex justify-center items-center ">
-          <div className="overflow-hidden rounded-full border-2 border-rose-400 shadow-rose-400 shadow-2xl bg-coral-red bg-gradient-to-r from-rose-400 to-red-500 ">
+          <div className="overflow-hidden rounded-full border-2 border-teal-400 shadow-teal-400 shadow-2xl bg-gradient-to-r from-teal-400 to-yellow-200">
             <Image
               width={1000}
               height={1000}
@@ -59,7 +61,7 @@ export function Band() {
             />
           </div>
 
-          <span className="absolute bg-white rounded-full p-5 text-coral-red text-sm bottom-10">
+          <span className="absolute bg-white rounded-full p-5 text-teal-600 text-sm bottom-10">
             <span className="text-base font-bold">Marry</span> <br />A little
             girl, red hood blonde hair innocent looking short girl
           </span>

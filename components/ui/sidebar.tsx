@@ -95,7 +95,7 @@ export function Sidebar({ className, ...props }: SidebarProps) {
             Settings
           </h2>
           <div className="space-y-1">
-            <Link href="/app/account">
+            <Link href="/app/profile">
               <Button variant="ghost" className="w-full justify-start">
                 <UserCircleIcon className="mr-2 h-4 w-4" />
                 Profile

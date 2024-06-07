@@ -1,4 +1,6 @@
-export function StoryWaveBottom() {
+interface StoryWaveBottomProps extends React.SVGProps<SVGSVGElement> {}
+
+export function StoryWaveBottom({ ...props }: StoryWaveBottomProps) {
   return (
     <svg
       id="wave"
@@ -6,11 +8,12 @@ export function StoryWaveBottom() {
       viewBox="0 0 1440 190"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <defs>
         <linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0">
-          <stop stopColor="#fb7185" offset="0%"></stop>
-          <stop stopColor="rgba(255, 84, 82, 1)" offset="100%"></stop>
+          <stop stopColor="#fef08a" offset="0%"></stop>
+          <stop stopColor="#2dd4bf" offset="100%"></stop>
         </linearGradient>
       </defs>
       <path

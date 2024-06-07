@@ -31,6 +31,12 @@ export function UserSignupForm({ className, ...props }: UserAuthFormProps) {
         title: "Error",
         description: errorMessage,
       });
+    } else {
+      toast({
+        variant: "default",
+        title: "Success",
+        description: "Signup successful, Please check your email to verify.",
+      });
     }
     setIsLoading(false);
   };
