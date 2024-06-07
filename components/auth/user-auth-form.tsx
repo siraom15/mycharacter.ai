@@ -12,6 +12,7 @@ import { login } from "@/app/auth/login/action";
 import Link from "next/link";
 import { ButtonLoading } from "../ui/button-loading";
 import { useToast } from "../ui/use-toast";
+import { redirect, useRouter } from "next/navigation";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -19,19 +20,27 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isLoadingGoogle, setIsLoadingGoogle] = React.useState<boolean>(false);
   const { toast } = useToast();
+  const router = useRouter();
 
   const formLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     const { errorMessage } = await login(new FormData(e.currentTarget));
+    setIsLoading(false);
     if (errorMessage) {
       toast({
         variant: "destructive",
         title: "Error",
         description: errorMessage,
       });
+    } else {
+      toast({
+        variant: "default",
+        title: "Success",
+        description: "Login successfully",
+      });
+      router.push("/app/account");
     }
-    setIsLoading(false);
   };
   return (
     <div className={cn("grid gap-6", className)} {...props}>
@@ -75,7 +84,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         </div>
       </form>
       <Separator className="text-muted-foreground" />
-      <Button type="button" disabled={isLoading}>
+      <Button type="button" disabled={isLoadingGoogle}>
         {isLoadingGoogle ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
         ) : (

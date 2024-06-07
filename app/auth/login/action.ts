@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 
-export async function login(formData: FormData): Promise<{ errorMessage?: string }> {
+export async function login(formData: FormData): Promise<{ errorMessage: string | null }> {
     const supabase = createClient()
 
     // type-casting here for convenience
@@ -20,7 +20,7 @@ export async function login(formData: FormData): Promise<{ errorMessage?: string
         console.log(error.message);
         return { errorMessage: error.message };
     }
-
-    revalidatePath('/', 'layout')
-    redirect('/app/account');
+    return {
+        errorMessage: null
+    }
 }

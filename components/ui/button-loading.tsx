@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 
-interface ButtonLoadingProps extends React.HTMLAttributes<HTMLButtonElement> {
+interface ButtonLoadingProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   isLoading: boolean;
-  [key: string]: any;
 }
 
 export function ButtonLoading({

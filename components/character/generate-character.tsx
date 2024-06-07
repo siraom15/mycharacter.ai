@@ -45,7 +45,9 @@ export function GenerateCharacter() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_WIZMODEL_TOKEN as string}`,
+        Authorization: `Bearer ${
+          process.env.NEXT_PUBLIC_WIZMODEL_TOKEN as string
+        }`,
       },
       body: JSON.stringify(data),
     });
@@ -59,15 +61,15 @@ export function GenerateCharacter() {
     setPrompt("");
   };
 
-  const handleGenerateCharacter = (e: Event) => {
+  const handleGenerateCharacter = (e: any) => {
     if (!prompt) {
-      console.log('show toast');
-      
+      console.log("show toast");
+
       toast({
         variant: "destructive",
         title: "Prompt is required",
         description: "Please input a prompt to generate a character.",
-      })
+      });
       return;
     }
     setIsLoading(true);
@@ -95,8 +97,8 @@ export function GenerateCharacter() {
               <DialogDescription>
                 Write a prompt to generate a new character.
                 <br />
-                Example prompt: &quot;A character who is a detective and has a pet
-                cat.&quot;
+                Example prompt: &quot;A character who is a detective and has a
+                pet cat.&quot;
                 {resultImageBase64 && (
                   <Image
                     src={parseBase64ToImage(resultImageBase64)}

@@ -76,7 +76,7 @@ export function UserSignupForm({ className, ...props }: UserAuthFormProps) {
         </div>
       </form>
       <Separator className="text-muted-foreground" />
-      <Button type="button" disabled={isLoading}>
+      <Button type="button" disabled={isLoadingGoogle}>
         {isLoadingGoogle ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
         ) : (

@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { ButtonLoading } from "@/components/ui/button-loading";
 import { useToast } from "@/components/ui/use-toast";
 import { UserProfile } from "@/interface";
+import AvatarForm from "./avatar";
 
 export default function AccountForm({ user }: { user: User | null }) {
   const supabase = createClient();
@@ -61,11 +62,7 @@ export default function AccountForm({ user }: { user: User | null }) {
     getProfile();
   }, [user, getProfile]);
 
-  async function updateProfile({
-    username,
-    website,
-    avatar_url,
-  }: UserProfile) {
+  async function updateProfile({ username, website, avatar_url }: UserProfile) {
     try {
       setLoading(true);
 
@@ -82,7 +79,7 @@ export default function AccountForm({ user }: { user: User | null }) {
         variant: "default",
         title: "Profile updated",
         description: "Your profile has been updated.",
-      })
+      });
     } catch (error) {
       toast({
         variant: "destructive",
@@ -97,6 +94,15 @@ export default function AccountForm({ user }: { user: User | null }) {
 
   return (
     <>
+      <AvatarForm
+        uid={user?.id ?? null}
+        url={avatar_url}
+        size={150}
+        onUpload={(url) => {
+          setAvatarUrl(url);
+          updateProfile({ fullname, username, website, avatar_url: url });
+        }}
+      />
       <div className="space-y-8">
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="email">Email</Label>
