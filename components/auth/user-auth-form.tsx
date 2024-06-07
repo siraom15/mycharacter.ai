@@ -39,7 +39,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         title: "Success",
         description: "Login successfully",
       });
-      router.push("/app/account");
+      router.push("/app/profile");
     }
   };
   return (

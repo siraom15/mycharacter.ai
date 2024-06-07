@@ -11,11 +11,11 @@ const stats = [
 ];
 
 const Stat = ({ end, label }: { end: number; label: string }) => (
-  <div className="text-white">
+  <div className="">
     <p className="text-4xl font-palanquin font-bold">
       <CountUp end={end} />
     </p>
-    <p className="leading-7 font-montserrat text-white">{label}</p>
+    <p className="leading-7 font-montserrat">{label}</p>
   </div>
 );
 
@@ -28,7 +28,7 @@ const Band = () => (
       className="object-contain h-1/2 w-96 rounded-full border-2 border-white shadow-white shadow-lg"
       alt="Marry"
     />
-    <span className="bg-white rounded-full p-5 text-coral-red text-sm absolute bottom-1 info-text">
+    <span className="bg-white rounded-full p-5 text-sm absolute bottom-1 info-text">
       <span className="text-lg font-bold">Catie</span> <br />
       &quot;Nerd Cat&quot;
     </span>
@@ -39,11 +39,11 @@ export function StoryStats() {
   return (
     <>
       <StoryWaveTop />
-      <div className="mx-auto flex flex-row items-center justify-center gap-10 align-middle w-full bg-rose-400 p-10">
+      <div className="mx-auto flex flex-row items-center justify-center gap-10 align-middle w-full bg-yellow-200 text-yellow-800 p-10">
         <Band />
         <div className="relative xl:w-2/5 flex flex-col items-start h-full">
-          <h1 className="mt-10 text-5xl font-bold text-white">
-            <span className="xl:whitespace-nowrap relative z-10 pr-10 text-white">
+          <h1 className="mt-10 text-5xl font-bold ">
+            <span className="xl:whitespace-nowrap relative z-10 pr-10 e">
               Our
             </span>
             <br />
@@ -51,7 +51,7 @@ export function StoryStats() {
             <br />
             Stories
           </h1>
-          <p className="font-montserrat text-white text-lg leading-8 mt-6 mb-14 sm:max-w-sm dark:text-white">
+          <p className="font-montserrat text-lg leading-8 mt-6 mb-14 sm:max-w-sm">
             Discover stories from our community of creators.
           </p>
           <div className="flex justify-start items-start flex-wrap w-full gap-16">
