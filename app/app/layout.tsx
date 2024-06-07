@@ -24,9 +24,12 @@ export default async function AppLayout({
     return redirect("/auth/login");
   }
   return (
-    <section className="grid lg:grid-cols-5 min-h-screen border-t">
-      <Sidebar />
-      <div className="col-span-3 lg:col-span-4 lg:border-l">{children}</div>
-    </section>
+    <>
+      <Navbar isLoggedIn={!!user} />
+      <section className="grid lg:grid-cols-5 min-h-screen border-t">
+        <Sidebar />
+        <div className="col-span-3 lg:col-span-4 lg:border-l">{children}</div>
+      </section>
+    </>
   );
 }

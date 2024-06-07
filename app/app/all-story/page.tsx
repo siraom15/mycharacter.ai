@@ -1,17 +1,18 @@
-"use client";
-
-import useStories from "@/app/hooks/useStories";
 import { StoryCard } from "@/components/story/story-card";
 import { StoryEmptyPlaceholder } from "@/components/story/story-empty-placeholder";
 import { Separator } from "@/components/ui/separator";
+import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 
-export default function AllStory() {
-  // fetch all stories
-  const { data: stories, isLoading, isError } = useStories();
+export default async function AllStory() {
+  const supabase = createClient();
+  const { data: stories } = await supabase
+    .from("stories")
+    .select(`*, profiles(id, username)`);
 
   return (
     <div className="p-4">
+      <pre>{JSON.stringify(stories, null, 2)}</pre>
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <h2 className="text-2xl font-semibold tracking-tight">All Stories</h2>
@@ -22,7 +23,7 @@ export default function AllStory() {
       </div>
       <Separator className="my-4" />
       <div className="grid grid-cols-6 gap-3">
-        {stories &&
+        {stories?.length &&
           stories.map((story) => (
             <Link href={`/app/story/${story.id}`} key={story.id}>
               <StoryCard
@@ -36,7 +37,7 @@ export default function AllStory() {
             </Link>
           ))}
       </div>
-      {/* <StoryEmptyPlaceholder /> */}
+      {!stories?.length && <StoryEmptyPlaceholder />}
     </div>
   );
 }

@@ -10,15 +10,41 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { login } from "@/app/auth/login/action";
 import Link from "next/link";
+import { ButtonLoading } from "../ui/button-loading";
+import { useToast } from "../ui/use-toast";
+import { redirect, useRouter } from "next/navigation";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isLoadingGoogle, setIsLoadingGoogle] = React.useState<boolean>(false);
+  const { toast } = useToast();
+  const router = useRouter();
 
+  const formLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const { errorMessage } = await login(new FormData(e.currentTarget));
+    setIsLoading(false);
+    if (errorMessage) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: errorMessage,
+      });
+    } else {
+      toast({
+        variant: "default",
+        title: "Success",
+        description: "Login successfully",
+      });
+      router.push("/app/account");
+    }
+  };
   return (
     <div className={cn("grid gap-6", className)} {...props}>
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={formLogin}>
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="email">Email</Label>
           <Input
@@ -39,20 +65,13 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             required
           />
         </div>
-        {/* <p>
-          <Link href="/auth/forgot-password">
-            <p className="text-primary underline underline-offset-4 hover:text-accent">
-              Forgot password?
-            </p>
-          </Link>
-        </p> */}
         <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Button
-            className="border-coral-red rounded-full hover:bg-coral-red-light hover:border-coral-red-light bg-gradient-to-r from-rose-400 to-red-500 hover:bg-gradient-to-l"
-            formAction={login}
+          <ButtonLoading
+            isLoading={isLoading}
+            className="border-coral-red rounded-full bg-gradient-to-r from-teal-400 to-yellow-200 hover:bg-gradient-to-l "
           >
             Sign in
-          </Button>
+          </ButtonLoading>
         </div>
 
         <div className="flex gap-2">
@@ -65,8 +84,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         </div>
       </form>
       <Separator className="text-muted-foreground" />
-      <Button type="button" disabled={isLoading}>
-        {isLoading ? (
+      <Button type="button" disabled={isLoadingGoogle}>
+        {isLoadingGoogle ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
         ) : (
           <Icons.google className="mr-2 h-4 w-4" />

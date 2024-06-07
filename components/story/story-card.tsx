@@ -17,6 +17,14 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { EyeIcon, ShareIcon } from "@heroicons/react/24/outline";
+import { Story, StoryWithProfile } from "@/interface";
+
+interface StoryCardProps extends React.HTMLAttributes<HTMLDivElement>{
+  story: StoryWithProfile;
+  aspectRatio?: "portrait" | "square";
+  width: number;
+  height: number;
+}
 
 export function StoryCard({
   story,
@@ -25,7 +33,7 @@ export function StoryCard({
   height,
   className,
   ...props
-}: any) {
+}: StoryCardProps) {
   return (
     <div className={cn("space-y-3", className)} {...props}>
       <ContextMenu>
@@ -66,7 +74,7 @@ export function StoryCard({
       </ContextMenu>
       <div className="space-y-1 text-sm">
         <h3 className="font-medium leading-none">{story.name}</h3>
-        <p className="text-xs text-muted-foreground">{story.owner}</p>
+        <p className="text-xs text-muted-foreground">{story.profiles.username}</p>
       </div>
     </div>
   );

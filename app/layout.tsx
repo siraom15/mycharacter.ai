@@ -29,17 +29,17 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const supabase = createClient();
+  // const supabase = createClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // const {
+  //   data: { user },
+  // } = await supabase.auth.getUser();
 
   return (
     <html lang="en">
       <body className={cn("min-h-screen")}>
         <main>
-          <Navbar isLoggedIn={!!user} />
+          {/* <Navbar isLoggedIn={!!user} /> */}
           {children}
         </main>
         <Toaster />

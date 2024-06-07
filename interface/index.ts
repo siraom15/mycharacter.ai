@@ -8,6 +8,12 @@ export type Story = {
     characters: Character[];
 }
 
+export type StoryWithProfile = Story & {
+    profiles: {
+        username: string;
+    };
+}
+
 export const stories: Story[] = [];
 
 export type Character = {
@@ -24,7 +30,7 @@ export type ResponseData = {
     message: string;
 }
 
-export type User = {
+export type UserProfile = {
     username: string | null;
     fullname: string | null;
     website: string | null;

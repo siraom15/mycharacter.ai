@@ -14,6 +14,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ButtonLoading } from "@/components/ui/button-loading";
 import { useToast } from "@/components/ui/use-toast";
+import { UserProfile } from "@/interface";
+import AvatarForm from "./avatar";
 
 export default function AccountForm({ user }: { user: User | null }) {
   const supabase = createClient();
@@ -60,16 +62,7 @@ export default function AccountForm({ user }: { user: User | null }) {
     getProfile();
   }, [user, getProfile]);
 
-  async function updateProfile({
-    username,
-    website,
-    avatar_url,
-  }: {
-    username: string | null;
-    fullname: string | null;
-    website: string | null;
-    avatar_url: string | null;
-  }) {
+  async function updateProfile({ username, website, avatar_url }: UserProfile) {
     try {
       setLoading(true);
 
@@ -86,7 +79,7 @@ export default function AccountForm({ user }: { user: User | null }) {
         variant: "default",
         title: "Profile updated",
         description: "Your profile has been updated.",
-      })
+      });
     } catch (error) {
       toast({
         variant: "destructive",
@@ -101,6 +94,15 @@ export default function AccountForm({ user }: { user: User | null }) {
 
   return (
     <>
+      <AvatarForm
+        uid={user?.id ?? null}
+        url={avatar_url}
+        size={150}
+        onUpload={(url) => {
+          setAvatarUrl(url);
+          updateProfile({ fullname, username, website, avatar_url: url });
+        }}
+      />
       <div className="space-y-8">
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="email">Email</Label>
@@ -113,16 +115,16 @@ export default function AccountForm({ user }: { user: User | null }) {
           />
         </div>
         <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="email">Full Name</Label>
+          <Label htmlFor="fullname">Full Name</Label>
           <Input
-            id="username"
+            id="fullname"
             type="text"
-            value={username || ""}
-            onChange={(e) => setUsername(e.target.value)}
+            value={fullname || ""}
+            onChange={(e) => setFullname(e.target.value)}
           />
         </div>
         <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="email">Username</Label>
+          <Label htmlFor="username">Username</Label>
           <Input
             id="username"
             type="text"
@@ -132,7 +134,7 @@ export default function AccountForm({ user }: { user: User | null }) {
         </div>
 
         <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="email">Website</Label>
+          <Label htmlFor="website">Website</Label>
           <Input
             id="website"
             type="url"
