@@ -17,7 +17,7 @@ import {
 import { BookmarkFilledIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CountUp from "react-countup";
 
 const renderCharacterCards = (characters: Character[]) => {
@@ -41,27 +41,39 @@ export default function StoryPage({ params }: { params: { id: string } }) {
   const router = useRouter();
   const supabase = createClient();
 
-  useEffect(() => {
-    async function fetchStory() {
-      const { data: story } = await supabase
+  const getStory = useCallback(async () => {
+    try {
+      setIsLoading(true);
+
+      const { data, error, status } = await supabase
         .from("stories")
         .select(`*, profiles(id, username)`)
         .eq("id", storyId)
         .single();
-      if (!story) {
-        toast({
-          title: "Story not found",
-          description: "The story you are looking for does not exist.",
-          variant: "destructive",
-        });
-        // redirect to all story page
-        router.push("/app/all-story");
-        return;
+
+      if (error && status !== 406) {
+        console.log(error);
+        throw error;
       }
-      setStory(story);
+
+      if (data) {
+        setStory(data);
+      }
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error fetching story",
+        description: "Please try again later.",
+      });
+      router.push("/app/all-story");
+    } finally {
+      setIsLoading(false);
     }
-    fetchStory().finally(() => setIsLoading(false));
-  }, [story, supabase]);
+  }, [supabase]);
+
+  useEffect(() => {
+    getStory();
+  }, [getStory]);
 
   return (
     <>
