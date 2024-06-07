@@ -8,6 +8,12 @@ export type Story = {
     characters: Character[];
 }
 
+export type StoryWithProfile = Story & {
+    profiles: {
+        username: string;
+    };
+}
+
 export const stories: Story[] = [];
 
 export type Character = {
