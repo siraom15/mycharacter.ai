@@ -24,7 +24,7 @@ export type ResponseData = {
     message: string;
 }
 
-export type User = {
+export type UserProfile = {
     username: string | null;
     fullname: string | null;
     website: string | null;
