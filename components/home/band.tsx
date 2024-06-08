@@ -45,7 +45,7 @@ export function Band() {
           </div>
         </div>
 
-        <div className="relative flex-1 flex justify-center items-center">
+        <div className="relative flex-1 lg:flex justify-center items-center hidden">
           <div className="overflow-hidden rounded-full border-2 border-teal-400 shadow-teal-400 shadow-2xl bg-gradient-to-r from-teal-400 to-yellow-200">
             <Image
               width={1000}
