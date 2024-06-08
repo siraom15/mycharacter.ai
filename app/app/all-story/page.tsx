@@ -45,7 +45,7 @@ export default function AllStory() {
         </div>
       </div>
       <Separator className="my-4" />
-      <StoryList stories={stories} isLoading={isLoading} />
+      <StoryList stories={stories} isLoading={isLoading} showCreateStory={false}/>
     </div>
   );
 }

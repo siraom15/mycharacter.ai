@@ -1,5 +1,5 @@
 import { StoryCard } from "@/components/story/story-card";
-import { StoryEmptyPlaceholder } from "@/components/story/story-empty-placeholder";
+import { EmptyPlaceholder } from "@/components/ui/empty-placeholder";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 
@@ -57,7 +57,7 @@ export default function SavedStory() {
           </div>
         </div>
         <Separator className="my-4" />
-        <StoryEmptyPlaceholder />
+        <EmptyPlaceholder />
       </div>
     </div>
   );
