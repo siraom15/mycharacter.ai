@@ -121,7 +121,12 @@ export function Sidebar({ className, ...props }: SidebarProps) {
         </Section>
 
         <Section title="Settings">
-          <NavItem href="/app/profile" icon={UserCircleIcon} text="Profile" />
+          <NavItem
+            href="/app/profile"
+            variant={variant("/app/profile")}
+            icon={UserCircleIcon}
+            text="Profile"
+          />
           <form action="/auth/signout" method="post">
             <NavItem
               icon={ArrowLeftStartOnRectangleIcon}
