@@ -5,7 +5,7 @@ import { StoryWaveBottom } from "./story-wave-bottom";
 export function Band() {
   return (
     <>
-      <section className="mx-auto flex flex-row items-center justify-center gap-10 align-middle w-2/3 mt-20">
+      <section className="mx-auto flex lg:flex-row flex-col items-center justify-center gap-10 align-middle w-2/3 mt-20">
         <div className="flex flex-1 flex-col">
           <p className="mt-6 lg:max-w-lg font-bold bg-gradient-to-r from-teal-800 to-yellow-800 text-transparent bg-clip-text">
             MyCharacter.AI
@@ -13,18 +13,13 @@ export function Band() {
           <h2 className="font-palanquin capitalize text-6xl lg:max-w-lg font-bold text-custom-black">
             Create your
             <br />
-            {/* <span className="bg-gradient-to-r from-rose-400 to-red-500 bg-clip-text inline-block text-transparent"> Imagine &nbsp;</span>
-            <span className="bg-gradient-to-r from-rose-400 to-red-500 bg-clip-text inline-block text-transparent"> Character </span>  */}
             <span className="relative text-5xl md:text-6xl md:leading-tight font-extrabold md:text-center leading-tight text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-yellow-200 mb-6">
               Imagine Character
             </span>
             <br />
             With AI Technology
           </h2>
-          {/* <p className="mt-4 lg:max-w-lg info-text">
-            Imagmic is a website that can help you to create your own character.
-            You can create your own character with AI technology.
-          </p> */}
+
           <p className="mt-6 lg:max-w-lg">
             You can create your own story and share it with other people. You
             can
@@ -50,7 +45,7 @@ export function Band() {
           </div>
         </div>
 
-        <div className="relative flex-1 flex justify-center items-center ">
+        <div className="relative flex-1 flex justify-center items-center">
           <div className="overflow-hidden rounded-full border-2 border-teal-400 shadow-teal-400 shadow-2xl bg-gradient-to-r from-teal-400 to-yellow-200">
             <Image
               width={1000}

@@ -39,7 +39,7 @@ export function StoryStats() {
   return (
     <>
       <StoryWaveTop />
-      <div className="mx-auto flex flex-row items-center justify-center gap-10 align-middle w-full bg-yellow-200 text-yellow-800 p-10">
+      <div className="mx-auto flex flex-col lg:flex-row items-center justify-center gap-10 align-middle w-full bg-yellow-200 text-yellow-800 p-10">
         <Band />
         <div className="relative xl:w-2/5 flex flex-col items-start h-full">
           <h1 className="mt-10 text-5xl font-bold ">

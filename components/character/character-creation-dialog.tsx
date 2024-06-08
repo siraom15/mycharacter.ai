@@ -20,32 +20,41 @@ import { ButtonLoading } from "../ui/button-loading";
 import { createStory } from "@/app/app/my-story/action";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
+import { createCharacterToStory } from "@/app/app/story/[id]/action";
 
-interface StoryCreationDialogProp
-  extends React.HTMLAttributes<HTMLDivElement> {}
+interface CharacterCreationDialogProp
+  extends React.HTMLAttributes<HTMLDivElement> {
+  storyId: string;
+}
 
-export function StoryCreationDialog({
+export function CharacterCreationDialog({
+  storyId,
   className,
   ...props
-}: StoryCreationDialogProp) {
-  const [storyName, setStoryName] = useState<string>("");
+}: CharacterCreationDialogProp) {
+  const [name, setName] = useState<string>("");
+  const [prompt, setPrompt] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const { toast } = useToast();
   const router = useRouter();
 
   const create = async () => {
-    const { error, errorMessage } = await createStory({ name: storyName });
+    const { error, errorMessage } = await createCharacterToStory({
+      name,
+      prompt,
+      storyId,
+    });
     if (error) {
       toast({
-        title: "Fail to Creat Story",
+        title: "Fail to Create Character",
         description: "Please try again later." + errorMessage,
         variant: "destructive",
       });
     } else {
       toast({
-        title: "Create Story Success",
-        description: "Story has been created",
+        title: "Create Character Success",
+        description: "Character has been created",
         variant: "default",
       });
       setOpen(false);
@@ -64,38 +73,48 @@ export function StoryCreationDialog({
       <div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
         <PlusCircledIcon className="w-12 h-12 text-gray-400" />
 
-        <h3 className="mt-4 text-lg font-semibold">Add More Story</h3>
+        <h3 className="mt-4 text-lg font-semibold">Add Character</h3>
         <p className="mb-4 mt-2 text-sm text-muted-foreground">
-          Create a story in this website.
+          Create a character to this story.
         </p>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button size="sm" className="relative">
-              Create Story
+              Create Character
             </Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Add Story</DialogTitle>
+              <DialogTitle>Add Character</DialogTitle>
               <DialogDescription>
-                Start creating your story by adding a story name.
+                Start creating your Character by adding a name and prompt.
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
-                <Label htmlFor="story">Story Name</Label>
+                <Label htmlFor="story">Character Name</Label>
                 <Input
                   id="story"
                   name="name"
-                  value={storyName}
-                  onChange={(e) => setStoryName(e.target.value)}
-                  placeholder="Eg. Harry Potter, Lord of the rings, ..."
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Eg. Harry Potter"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="prompt">Prompt</Label>
+                <Input
+                  id="prompt"
+                  name="prompt"
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  placeholder="Eg. A young wizard."
                 />
               </div>
             </div>
             <DialogFooter>
               <ButtonLoading isLoading={isLoading} onClick={create}>
-                Create Story
+                Create Character
               </ButtonLoading>
             </DialogFooter>
           </DialogContent>
