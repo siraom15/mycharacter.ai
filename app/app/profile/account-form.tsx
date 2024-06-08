@@ -16,6 +16,7 @@ import { ButtonLoading } from "@/components/ui/button-loading";
 import { useToast } from "@/components/ui/use-toast";
 import { UserProfile } from "@/interface";
 import AvatarForm from "./avatar";
+import { Separator } from "@/components/ui/separator";
 
 export default function AccountForm({ user }: { user: User | null }) {
   const supabase = createClient();
@@ -103,7 +104,8 @@ export default function AccountForm({ user }: { user: User | null }) {
           updateProfile({ fullname, username, website, avatar_url: url });
         }}
       />
-      <div className="space-y-8">
+      <Separator className="my-4" />
+      <div className="space-y-5">
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="email">Email</Label>
           <Input
