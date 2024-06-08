@@ -20,7 +20,7 @@ export function Navbar({ isLoggedIn, ...props }: NavbarProps) {
         <Link href="https://github.com/siraom15/mycharacter.ai/" target="_blank">
           <Icons.gitHub className="h-8 w-8" />
         </Link>
-        {isLoggedIn ? (
+        {/* {isLoggedIn ? (
           <form action="/auth/signout" method="post">
             <Button type="submit" className="bg-gradient-to-r from-teal-400 to-yellow-400 hover:bg-gradient-to-tr">Sign out</Button>
           </form>
@@ -30,7 +30,7 @@ export function Navbar({ isLoggedIn, ...props }: NavbarProps) {
               App
             </Button>
           </Link>
-        )}
+        )} */}
       </div>
     </div>
   );
