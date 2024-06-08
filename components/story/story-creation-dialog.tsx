@@ -35,6 +35,15 @@ export function StoryCreationDialog({
   const router = useRouter();
 
   const create = async () => {
+    setIsLoading(true);
+    if (!storyName) {
+      toast({
+        title: "Fail to Create Story",
+        description: "Please fill all fields.",
+        variant: "destructive",
+      });
+      return;
+    }
     const { error, errorMessage } = await createStory({ name: storyName });
     if (error) {
       toast({
@@ -52,6 +61,8 @@ export function StoryCreationDialog({
       // refresh
       router.refresh();
     }
+    setStoryName("");
+    setIsLoading(false);
   };
   return (
     <div

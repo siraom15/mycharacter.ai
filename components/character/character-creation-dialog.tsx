@@ -40,6 +40,15 @@ export function CharacterCreationDialog({
   const router = useRouter();
 
   const create = async () => {
+    setIsLoading(true);
+    if(!name || !prompt) {
+      toast({
+        title: "Fail to Create Character",
+        description: "Please fill all fields.",
+        variant: "destructive",
+      });
+      return;
+    }
     const { error, errorMessage } = await createCharacterToStory({
       name,
       prompt,
@@ -61,6 +70,9 @@ export function CharacterCreationDialog({
       // refresh
       router.refresh();
     }
+    setName("");
+    setPrompt("");
+    setIsLoading(false);
   };
   return (
     <div
