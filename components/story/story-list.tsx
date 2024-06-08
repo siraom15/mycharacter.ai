@@ -28,7 +28,7 @@ export const StoryList = ({
   return (
     <>
       <div className="flex w-full justify-between items-center">
-        <h2 className="text-xl font-semibold tracking-tight bg-gradient-to-r from-violet-400 to-pink-400 text-transparent bg-clip-text">
+        <h2 className="text-2xl font-semibold tracking-tight bg-gradient-to-r from-violet-400 to-pink-400 text-transparent bg-clip-text">
           {filteredStories.length} Stories
         </h2>
         <div className="flex w-full max-w-sm items-center space-x-2 my-2">

@@ -39,6 +39,12 @@ export function CharacterCreationDialog({
   const { toast } = useToast();
   const router = useRouter();
 
+  const resetState = () => {
+    setName("");
+    setPrompt("");
+    setIsLoading(false);
+  }
+
   const create = async () => {
     setIsLoading(true);
     if(!name || !prompt) {
@@ -47,6 +53,7 @@ export function CharacterCreationDialog({
         description: "Please fill all fields.",
         variant: "destructive",
       });
+      setIsLoading(false);
       return;
     }
     const { error, errorMessage } = await createCharacterToStory({
@@ -91,7 +98,7 @@ export function CharacterCreationDialog({
         </p>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button size="sm" className="relative">
+            <Button size="sm" className="relative bg-gradient-to-r hover:bg-gradient-to-tr from-red-500 to-orange-500">
               Create Character
             </Button>
           </DialogTrigger>
@@ -125,7 +132,7 @@ export function CharacterCreationDialog({
               </div>
             </div>
             <DialogFooter>
-              <ButtonLoading isLoading={isLoading} onClick={create}>
+              <ButtonLoading className="bg-gradient-to-r hover:bg-gradient-to-tr from-red-500 to-orange-500" isLoading={isLoading} onClick={create}>
                 Create Character
               </ButtonLoading>
             </DialogFooter>

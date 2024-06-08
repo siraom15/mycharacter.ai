@@ -82,34 +82,9 @@ export default function StoryPage({ params }: { params: { id: string } }) {
     }
   }, [storyId, supabase, toast, router, updateView]);
 
-  const getCharacters = useCallback(async () => {
-    try {
-      setIsLoading(true);
-
-      const { data, error, status } = await supabase
-        .from("characters")
-        .select(`*`)
-        .eq("story_id", storyId);
-
-      if (data) {
-        setCharacters(data);
-      }
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Error fetching characters",
-        description: "Please try again later.",
-      });
-      router.push("/app/all-story");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [storyId, supabase, toast, router]);
-
   useEffect(() => {
     getStory();
-    getCharacters();
-  }, [getStory, getCharacters]);
+  }, [getStory]);
 
   return (
     <>
@@ -120,17 +95,17 @@ export default function StoryPage({ params }: { params: { id: string } }) {
           <div>
             <div className="flex gap-3 justify-between p-5">
               <div className="space-y-1">
-                <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-cyan-300 to-violet-400 text-transparent bg-clip-text">
+                <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-red-500 to-orange-500 text-transparent bg-clip-text">
                   {story.name}
                 </h2>
-                <p className="text-sm">By J.K. Rowling</p>
+                <p className="text-sm">{story.description}</p>
                 <div>
                   Story Creator:{" "}
                   <span className="hover:underline">
                     {story.profiles.username}
                   </span>
                   {canEdit && (
-                    <Badge className="bg-gradient-to-r from-cyan-300 to-violet-400">
+                    <Badge className="bg-gradient-to-r from-red-500 to-orange-500 ml-2">
                       You
                     </Badge>
                   )}{" "}
@@ -141,7 +116,7 @@ export default function StoryPage({ params }: { params: { id: string } }) {
                 </p>
                 <p className="flex gap-2 items-center">
                   <EyeIcon className="h-5 w-5 text-yellow-500" />
-                  Views: <CountUp end={story.views} /> Views
+                  Views: <CountUp end={story.views} />
                 </p>
                 <div className="flex gap-2">
                   <Button className="bg-gradient-to-r hover:bg-gradient-to-tr from-red-500 to-orange-500">

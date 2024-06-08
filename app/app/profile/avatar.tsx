@@ -4,6 +4,8 @@ import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ButtonLoading } from "@/components/ui/button-loading";
+import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 
 export default function AvatarForm({
   uid,
@@ -71,19 +73,8 @@ export default function AvatarForm({
   };
 
   return (
-    <div>
+    <div className="flex items-center gap-4">
       {avatarUrl ? (
-        // <Avatar>
-        //   <AvatarImage
-        //     width={size}
-        //     height={size}
-        //     src={avatarUrl}
-        //     alt="Avatar"
-        //     className="avatar image"
-        //     style={{ height: size, width: size }}
-        //   />
-        //   <AvatarFallback>Avatar Image</AvatarFallback>
-        // </Avatar>
         <Image
           width={size}
           height={size}
@@ -99,13 +90,12 @@ export default function AvatarForm({
         />
       )}
       <div style={{ width: size }}>
-        <label
-          //   isLoading={uploading}
-          className="button primary block"
+        <Label
+          className={cn(uploading && 'text-gray-500 animate-pulse',"button primary block")}
           htmlFor="single"
         >
-          {uploading ? "Uploading" : "Upload"} Avatar
-        </label>
+          {uploading ? "Uploading..." : "Upload"} Avatar
+        </Label>
         <input
           style={{
             visibility: "hidden",
