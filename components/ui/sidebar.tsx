@@ -44,11 +44,11 @@ const NavItem = ({
   const content = (
     <Button
       variant={variant}
-      className={`w-full justify-start ${className}`}
+      className={`w-full justify-start ${className} text-teal-800`}
       type={type}
       {...props}
     >
-      <Icon className="mr-2 h-4 w-4" />
+      <Icon className="mr-2 h-4 w-4 text-teal-800" />
       {text}
     </Button>
   );
@@ -64,8 +64,12 @@ const Section = ({
   children: React.ReactNode;
 }) => (
   <div className="px-3 py-2">
-    <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">{title}</h2>
-    <div className="space-y-1">{children}</div>
+    <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight bg-gradient-to-r from-teal-400 to-yellow-400 text-transparent bg-clip-text">
+      {title}
+    </h2>
+    <div className="space-y-1 bg-gradient-to-r from-teal-400 to-yellow-400 text-transparent bg-clip-text">
+      {children}
+    </div>
   </div>
 );
 
@@ -74,12 +78,21 @@ export function Sidebar({ className, ...props }: SidebarProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const variant = (pn: string) => {
-    return pathname === pn ? "secondary" : "ghost";
+    return pathname === pn ? "outline" : "ghost";
   };
 
   return (
-    <div className={cn("pb-12", className)} {...props}>
+    <div
+      className={cn(
+        "pb-12",
+        className,
+      )}
+      {...props}
+    >
       <div className="space-y-4 py-4">
+        <div className="text-xl px-3 py-2 font-bold items-center flex align-center bg-gradient-to-r from-teal-400 to-yellow-400 text-transparent bg-clip-text">
+          MyCharacter.AI
+        </div>
         <Section title="Discover">
           <NavItem
             href="/app/all-story"
