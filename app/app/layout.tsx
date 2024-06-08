@@ -26,9 +26,9 @@ export default async function AppLayout({
   return (
     <>
       <Navbar isLoggedIn={!!user} />
-      <section className="grid lg:grid-cols-5 min-h-screen border-t">
-        <Sidebar />
-        <div className="col-span-3 lg:col-span-4 lg:border-l">{children}</div>
+      <section className="grid grid-cols-5 min-h-screen border-t">
+        <Sidebar  className="col-span-1"/>
+        <div className="col-span-4 lg:col-span-4 lg:border-l">{children}</div>
       </section>
     </>
   );

@@ -30,34 +30,10 @@ export function CharacterEmptyPlaceholder() {
           <path d="M17 18.5a9 9 0 1 0-10 0" />
         </svg>
 
-        <h3 className="mt-4 text-lg font-semibold">No story added</h3>
+        <h3 className="mt-4 text-lg font-semibold">No character founded</h3>
         <p className="mb-4 mt-2 text-sm text-muted-foreground">
-          Start by create a story in this website.
+          Start by create a character in this website.
         </p>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button size="sm" className="relative">
-              Create Story
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Add Podcast</DialogTitle>
-              <DialogDescription>
-                Copy and paste the podcast feed URL to import.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid gap-2">
-                <Label htmlFor="url">Podcast URL</Label>
-                <Input id="url" placeholder="https://example.com/feed.xml" />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button>Import Podcast</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
       </div>
     </div>
   )
