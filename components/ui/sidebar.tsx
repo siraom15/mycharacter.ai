@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -18,14 +18,11 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
-
-}
+interface SidebarProps extends React.HTMLAttributes<HTMLElement> {}
 
 export function Sidebar({ className, ...props }: SidebarProps) {
+  const pathname = usePathname();
 
-  const pathname = usePathname()
-  
   return (
     <div className={cn("pb-12", className)}>
       <div className="space-y-4 py-4">
@@ -101,10 +98,16 @@ export function Sidebar({ className, ...props }: SidebarProps) {
                 Profile
               </Button>
             </Link>
-            <Button variant="ghost" className="w-full justify-start">
-              <ArrowLeftStartOnRectangleIcon className="mr-2 h-4 w-4" />
-              Signout
-            </Button>
+            <form action="/auth/signout" method="post">
+              <Button
+                type="submit"
+                variant="ghost"
+                className="w-full justify-start"
+              >
+                <ArrowLeftStartOnRectangleIcon className="mr-2 h-4 w-4" />
+                Signout
+              </Button>
+            </form>
           </div>
         </div>
       </div>

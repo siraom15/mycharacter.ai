@@ -1,4 +1,5 @@
 "use client";
+
 import { CharacterCard } from "@/components/character/character-card";
 import { CharacterEmptyPlaceholder } from "@/components/character/character-empty-placeholder";
 import { GenerateCharacter } from "@/components/character/generate-character";
@@ -33,13 +34,25 @@ const renderCharacterCards = (characters: Character[]) => {
 };
 
 export default function StoryPage({ params }: { params: { id: string } }) {
-  // Fetch data from the server
   const storyId = params.id;
   const [story, setStory] = useState<StoryWithProfile>();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const supabase = createClient();
+
+  const updateView = useCallback(
+    async (toView: number) => {
+      const { data, error } = await supabase
+        .from("stories")
+        .update({
+          views: toView,
+        })
+        .eq("id", storyId);
+      console.log(data, error, storyId);
+    },
+    [storyId, supabase],
+  );
 
   const getStory = useCallback(async () => {
     try {
@@ -52,11 +65,13 @@ export default function StoryPage({ params }: { params: { id: string } }) {
         .single();
 
       if (error && status !== 406) {
-        console.log(error);
+        console.error(error);
         throw error;
       }
 
       if (data) {
+        let currentView = data.views;
+        await updateView(currentView + 1);
         setStory(data);
       }
     } catch (error) {
@@ -69,7 +84,7 @@ export default function StoryPage({ params }: { params: { id: string } }) {
     } finally {
       setIsLoading(false);
     }
-  }, [supabase]);
+  }, [storyId, supabase, toast, router, updateView]);
 
   useEffect(() => {
     getStory();
@@ -77,53 +92,48 @@ export default function StoryPage({ params }: { params: { id: string } }) {
 
   return (
     <>
-      {isLoading && <Loading />}
-      {story && (
+      {isLoading ? (
+        <Loading />
+      ) : story ? (
         <div>
-          <div className="">
-            <div className="flex gap-3 justify-between p-5">
-              <div className="space-y-1">
-                <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-cyan-300 to-violet-400 text-transparent bg-clip-text">
-                  {story.name}
-                </h2>
-                <p className="text-sm ">By J.K. Rowling</p>
-                <p>Story Creater: {story.profiles.username}</p>
-                <p className="flex gap-2 items-center">
-                  <HandThumbUpIcon className="h-5 w-5 text-blue-500" />
-                  Like : <CountUp end={story.likes} /> Likes
-                </p>
-                <p className="flex gap-2 items-center">
-                  <EyeIcon className="h-5 w-5 text-yellow-500" />
-                  View : <CountUp end={story.views} /> Views{" "}
-                </p>
-
-                {/* Like button */}
-                <div className="flex gap-2">
-                  <Button className="w-20">
-                    <BookmarkFilledIcon className="h-5 w-5" />
-                    Upvote
-                  </Button>
-                  <Button className="w-20">
-                    <BookmarkFilledIcon className="h-5 w-5" />
-                    Save
-                  </Button>
-                </div>
+          <div className="flex gap-3 justify-between p-5">
+            <div className="space-y-1">
+              <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-cyan-300 to-violet-400 text-transparent bg-clip-text">
+                {story.name}
+              </h2>
+              <p className="text-sm">By J.K. Rowling</p>
+              <p>Story Creator: {story.profiles.username}</p>
+              <p className="flex gap-2 items-center">
+                <HandThumbUpIcon className="h-5 w-5 text-blue-500" />
+                Likes: <CountUp end={story.likes} /> Likes
+              </p>
+              <p className="flex gap-2 items-center">
+                <EyeIcon className="h-5 w-5 text-yellow-500" />
+                Views: <CountUp end={story.views} /> Views
+              </p>
+              <div className="flex gap-2">
+                <Button className="w-20">
+                  <BookmarkFilledIcon className="h-5 w-5" />
+                  Upvote
+                </Button>
+                <Button className="w-20">
+                  <BookmarkFilledIcon className="h-5 w-5" />
+                  Save
+                </Button>
               </div>
-              <Image
-                src={story.cover}
-                alt={story.name}
-                width={300}
-                height={300}
-                className="h-auto w-44 object-cover transition-all hover:scale-105 rounded-sm shadow-white shadow border-2 border-white"
-              />
             </div>
-            <div className="w-full">
-              <ChevronDoubleDownIcon className="h-5 w-5 mx-auto text-gray-500 animate-bounce" />
-            </div>
+            <Image
+              src={story.cover}
+              alt={story.name}
+              width={300}
+              height={300}
+              className="h-auto w-44 object-cover transition-all hover:scale-105 rounded-sm shadow-white shadow border-2 border-white"
+            />
           </div>
-
+          <div className="w-full">
+            <ChevronDoubleDownIcon className="h-5 w-5 mx-auto text-gray-500 animate-bounce" />
+          </div>
           <Separator className="my-4" />
-
           <div className="p-5 gap-3">
             <div className="flex w-full justify-between">
               <h2 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-cyan-300 to-violet-400 text-transparent bg-clip-text">
@@ -134,7 +144,6 @@ export default function StoryPage({ params }: { params: { id: string } }) {
                 <Button type="submit">Search</Button>
               </div>
             </div>
-
             {story.characters?.length ? (
               <div className="grid grid-cols-5 gap-4 bg-white">
                 {renderCharacterCards(story.characters)}
@@ -144,6 +153,8 @@ export default function StoryPage({ params }: { params: { id: string } }) {
             )}
           </div>
         </div>
+      ) : (
+        <CharacterEmptyPlaceholder />
       )}
     </>
   );

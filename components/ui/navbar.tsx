@@ -12,7 +12,7 @@ export function Navbar({ isLoggedIn, ...props }: NavbarProps) {
     <div className="mx-auto flex justify-between p-2">
       <a
         href="/"
-        className="text-xl font-bold items-center flex align-center bg-gradient-to-r from-cyan-300 to-violet-400 text-transparent bg-clip-text"
+        className="text-xl font-bold items-center flex align-center bg-gradient-to-r from-teal-400 to-yellow-400 text-transparent bg-clip-text"
       >
         MyCharacter.AI
       </a>
@@ -22,7 +22,7 @@ export function Navbar({ isLoggedIn, ...props }: NavbarProps) {
         </Link>
         {isLoggedIn ? (
           <form action="/auth/signout" method="post">
-            <Button type="submit">Sign out</Button>
+            <Button type="submit" className="bg-gradient-to-r from-teal-400 to-yellow-400 hover:bg-gradient-to-tr">Sign out</Button>
           </form>
         ) : (
           <Link href="/app/all-story">

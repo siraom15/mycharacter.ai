@@ -1,48 +1,55 @@
 import { StoryCard } from "@/components/story/story-card";
+import { StoryCreationDialog } from "@/components/story/story-creation";
 import { StoryEmptyPlaceholder } from "@/components/story/story-empty-placeholder";
 import { Separator } from "@/components/ui/separator";
+import { StoryWithProfile } from "@/interface";
+import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 
-const stories = [
-  {
-    id: 0,
-    name: "Harry Potter: Order of the Phoenix",
-    cover: "/img/harry-oop.jpeg",
-    owner: "Aommie",
-  },
-  {
-    id: 1,
-    name: "The Story of the Story",
-    cover: "/img/cover-1.png",
-    owner: "Mark Zuckerberg",
-  },
-  {
-    id: 2,
-    name: "A lover of the Story",
-    cover: "/img/cover-2.png",
-    owner: "James Bond",
-  },
-  {
-    id: 3,
-    name: "The cat life",
-    cover: "/img/cover-3.png",
-    owner: "Cat",
-  },
-  {
-    id: 4,
-    name: "The Story of the Story",
-    cover: "/img/cover-1.png",
-    owner: "Mark Zuckerberg",
-  },
-  {
-    id: 5,
-    name: "The Story of the Story",
-    cover: "/img/cover-2.png",
-    owner: "Mark Zuckerberg",
-  },
-];
+export default async function MyStory() {
+  const supabase = createClient();
 
-export default function MyStory() {
+  // Fetch user information
+  const { data: userData, error: userError } = await supabase.auth.getUser();
+  if (userError) {
+    return (
+      <div className="bg-white p-4">
+        Error fetching user data: {userError.message}
+      </div>
+    );
+  }
+
+  const userId = userData.user?.id;
+  if (!userId) {
+    return <div className="bg-white p-4">User not logged in.</div>;
+  }
+
+  // Fetch stories for the user
+  const {
+    data: stories,
+    error: storiesError,
+    status: storiesStatus,
+  } = await supabase
+    .from("stories")
+    .select("*, profiles(*)")
+    .eq("owner", userId);
+
+  if (storiesError) {
+    return (
+      <div className="bg-white p-4">
+        Error fetching stories: {storiesError.message}
+      </div>
+    );
+  }
+
+  if (storiesStatus !== 200) {
+    return (
+      <div className="bg-white p-4">
+        Unexpected status code: {storiesStatus}
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white">
       <div className="p-4">
@@ -52,27 +59,30 @@ export default function MyStory() {
               My Stories
             </h2>
             <p className="text-sm text-muted-foreground">
-              Here you can see all the your stories in our website.
+              Here you can see all your stories on our website.
             </p>
           </div>
         </div>
         <Separator className="my-4" />
-        {/* <div className="grid grid-cols-5 gap-4">
-          {stories &&
+        <div className="grid grid-cols-6 gap-2">
+          {stories && stories.length > 0 ? (
             stories.map((story) => (
               <Link href={`/app/story/${story.id}`} key={story.id}>
                 <StoryCard
                   key={story.id}
                   story={story}
-                  className="w-[150px]"
+                  className="w-full min-h[150px]"
                   aspectRatio="square"
                   width={150}
                   height={150}
                 />
               </Link>
-            ))}
-        </div> */}
-        <StoryEmptyPlaceholder />
+            ))
+          ) : (
+            <StoryEmptyPlaceholder className="col-span-5 " />
+          )}
+          <StoryCreationDialog className="w-full min-h[150px]" />
+        </div>
       </div>
     </div>
   );
