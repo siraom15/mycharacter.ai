@@ -1,4 +1,3 @@
-import { CharacterEmptyPlaceholder } from "@/components/character/character-empty-placeholder";
 import { GenerateCharacter } from "@/components/character/generate-character";
 import { Separator } from "@/components/ui/separator";
 

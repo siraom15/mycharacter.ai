@@ -57,7 +57,10 @@ export default function SavedStory() {
           </div>
         </div>
         <Separator className="my-4" />
-        <EmptyPlaceholder />
+        <EmptyPlaceholder 
+          title="No stories found"
+          description="You haven't saved any stories yet."
+        />
       </div>
     </div>
   );
