@@ -19,7 +19,7 @@ import {
 import { EyeIcon, ShareIcon } from "@heroicons/react/24/outline";
 import { Story, StoryWithProfile } from "@/interface";
 
-interface StoryCardProps extends React.HTMLAttributes<HTMLDivElement>{
+interface StoryCardProps extends React.HTMLAttributes<HTMLDivElement> {
   story: StoryWithProfile;
   aspectRatio?: "portrait" | "square";
   width: number;
@@ -45,8 +45,8 @@ export function StoryCard({
               width={width}
               height={height}
               className={cn(
-                "object-cover transition-all hover:scale-105",
-                aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square"
+                "object-cover transition-all hover:scale-105 w-full",
+                aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square",
               )}
             />
           </div>
@@ -74,7 +74,12 @@ export function StoryCard({
       </ContextMenu>
       <div className="space-y-1 text-sm">
         <h3 className="font-medium leading-none">{story.name}</h3>
-        <p className="text-xs text-muted-foreground">{story.profiles.username}</p>
+        <p className="flex gap-2 items-center text-xs text-muted-foreground">
+          <EyeIcon className="h-4 w-4" /> {story.views.toLocaleString()}
+        </p>
+        <p className="text-xs text-muted-foreground">
+          {story.profiles.username}
+        </p>
       </div>
     </div>
   );

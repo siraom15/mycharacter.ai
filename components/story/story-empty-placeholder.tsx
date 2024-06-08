@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,14 +7,28 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { ListBulletIcon } from "@heroicons/react/24/outline"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
+import { ListBulletIcon } from "@heroicons/react/24/outline";
 
-export function StoryEmptyPlaceholder() {
+interface StoryEmptyPlaceholderProp
+  extends React.HTMLAttributes<HTMLDivElement> {}
+
+export function StoryEmptyPlaceholder({
+  className,
+  ...props
+}: StoryEmptyPlaceholderProp) {
+  
   return (
-    <div className="flex h-[450px] shrink-0 items-center justify-center rounded-md border border-dashed">
+    <div
+      {...props}
+      className={cn(
+        className,
+        "flex h-[450px] shrink-0 items-center justify-center rounded-md border border-dashed",
+      )}
+    >
       <div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
         <ListBulletIcon className="w-12 h-12 text-gray-400" />
 
@@ -38,7 +52,10 @@ export function StoryEmptyPlaceholder() {
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
                 <Label htmlFor="story">Story Name</Label>
-                <Input id="story" placeholder="Eg. Harry Potter, Lord of the rings, ..." />
+                <Input
+                  id="story"
+                  placeholder="Eg. Harry Potter, Lord of the rings, ..."
+                />
               </div>
             </div>
             <DialogFooter>
@@ -48,5 +65,5 @@ export function StoryEmptyPlaceholder() {
         </Dialog>
       </div>
     </div>
-  )
+  );
 }

@@ -5,7 +5,7 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Home | MyCharacter.AI",
+  title: "App | MyCharacter.AI",
   description: "Create your own character with AI technology",
 };
 
