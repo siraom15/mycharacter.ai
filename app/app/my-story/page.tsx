@@ -1,53 +1,43 @@
-import { StoryCard } from "@/components/story/story-card";
-import { StoryCreationDialog } from "@/components/story/story-creation";
-import { StoryEmptyPlaceholder } from "@/components/story/story-empty-placeholder";
+"use client";
+
+import { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { StoryWithProfile } from "@/interface";
-import { createClient } from "@/utils/supabase/server";
-import Link from "next/link";
+import { createClient } from "@/utils/supabase/client";
+import { StoryList } from "@/components/story/story-list";
 
-export default async function MyStory() {
+export default function MyStory() {
   const supabase = createClient();
+  const [stories, setStories] = useState<StoryWithProfile[]>([]);
+  const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Fetch user information
-  const { data: userData, error: userError } = await supabase.auth.getUser();
-  if (userError) {
-    return (
-      <div className="bg-white p-4">
-        Error fetching user data: {userError.message}
-      </div>
-    );
-  }
+  useEffect(() => {
+    const fetchStories = async () => {
+      setIsLoading(true);
+      const { data: userData, error: userError } =
+        await supabase.auth.getUser();
+      if (userError) {
+      }
+      const { data: storiesData, error: storiesError } = await supabase
+        .from("stories")
+        .select("*, profiles(*)")
+        .eq("owner", userData.user?.id)
+        .order("created_at", { ascending: true });
 
-  const userId = userData.user?.id;
-  if (!userId) {
-    return <div className="bg-white p-4">User not logged in.</div>;
-  }
+      if (storiesError) {
+        setError(`Error fetching stories: ${storiesError.message}`);
+      } else {
+        setStories(storiesData);
+      }
+      setIsLoading(false);
+    };
 
-  // Fetch stories for the user
-  const {
-    data: stories,
-    error: storiesError,
-    status: storiesStatus,
-  } = await supabase
-    .from("stories")
-    .select("*, profiles(*)")
-    .eq("owner", userId);
+    fetchStories();
+  }, [supabase]);
 
-  if (storiesError) {
-    return (
-      <div className="bg-white p-4">
-        Error fetching stories: {storiesError.message}
-      </div>
-    );
-  }
-
-  if (storiesStatus !== 200) {
-    return (
-      <div className="bg-white p-4">
-        Unexpected status code: {storiesStatus}
-      </div>
-    );
+  if (error) {
+    return <div className="bg-white p-4">{error}</div>;
   }
 
   return (
@@ -55,7 +45,7 @@ export default async function MyStory() {
       <div className="p-4">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
-            <h2 className="text-2xl font-semibold tracking-tight">
+            <h2 className="text-2xl font-semibold tracking-tight bg-gradient-to-r from-violet-400 to-pink-400 text-transparent bg-clip-text">
               My Stories
             </h2>
             <p className="text-sm text-muted-foreground">
@@ -64,25 +54,7 @@ export default async function MyStory() {
           </div>
         </div>
         <Separator className="my-4" />
-        <div className="grid grid-cols-6 gap-2">
-          {stories && stories.length > 0 ? (
-            stories.map((story) => (
-              <Link href={`/app/story/${story.id}`} key={story.id}>
-                <StoryCard
-                  key={story.id}
-                  story={story}
-                  className="w-full min-h[150px]"
-                  aspectRatio="square"
-                  width={150}
-                  height={150}
-                />
-              </Link>
-            ))
-          ) : (
-            <StoryEmptyPlaceholder className="col-span-5 " />
-          )}
-          <StoryCreationDialog className="w-full min-h[150px]" />
-        </div>
+        <StoryList stories={stories} isLoading={isLoading} />
       </div>
     </div>
   );
