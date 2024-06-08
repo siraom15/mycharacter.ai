@@ -5,6 +5,9 @@ export type Story = {
     likes: number;
     views: number;
     cover: string;
+    description: string;
+    created_at: string;
+    is_public: boolean;
     characters: Character[];
 }
 
@@ -14,8 +17,6 @@ export type StoryWithProfile = Story & {
     };
 }
 
-export const stories: Story[] = [];
-
 export type Character = {
     id: string | number;
     name: string;
@@ -23,8 +24,6 @@ export type Character = {
     cover: string;
     // story: string;
 }
-
-export const characters: Character[] = [];
 
 export type ResponseData = {
     message: string;

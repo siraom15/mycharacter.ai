@@ -1,16 +1,19 @@
 'use server'
 
+import { Story } from '@/interface';
 import { createClient } from '@/utils/supabase/server';
 
 interface StoryCreationProps {
     name: string;
+    description: string;
+    is_public: boolean;
 }
 interface StoryCreationResult {
     error: boolean;
     errorMessage?: string;
 }
 
-export async function createStory({ name }: StoryCreationProps): Promise<StoryCreationResult> {
+export async function createStory({ name, description, is_public }: StoryCreationProps): Promise<StoryCreationResult> {
     const supabase = createClient();
 
     try {
@@ -18,7 +21,9 @@ export async function createStory({ name }: StoryCreationProps): Promise<StoryCr
         const ownerId = user?.id;
         const data = {
             name,
+            description,
             owner: ownerId,
+            is_public,
         };
 
         const { error } = await supabase.from('stories').insert(data);

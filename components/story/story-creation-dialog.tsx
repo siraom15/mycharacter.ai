@@ -20,6 +20,7 @@ import { ButtonLoading } from "../ui/button-loading";
 import { createStory } from "@/app/app/my-story/action";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
+import { Switch } from "../ui/switch";
 
 interface StoryCreationDialogProp
   extends React.HTMLAttributes<HTMLDivElement> {}
@@ -29,6 +30,8 @@ export function StoryCreationDialog({
   ...props
 }: StoryCreationDialogProp) {
   const [storyName, setStoryName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [publicMode, setPublicMode] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const { toast } = useToast();
@@ -36,15 +39,20 @@ export function StoryCreationDialog({
 
   const create = async () => {
     setIsLoading(true);
-    if (!storyName) {
+    if (!storyName || !description) {
       toast({
         title: "Fail to Create Story",
         description: "Please fill all fields.",
         variant: "destructive",
       });
+      setIsLoading(false);
       return;
     }
-    const { error, errorMessage } = await createStory({ name: storyName });
+    const { error, errorMessage } = await createStory({
+      name: storyName,
+      description,
+      is_public: publicMode,
+    });
     if (error) {
       toast({
         title: "Fail to Create Story",
@@ -103,6 +111,27 @@ export function StoryCreationDialog({
                   placeholder="Eg. Harry Potter, Lord of the rings, ..."
                 />
               </div>
+              <div className="grid gap-2">
+                <Label htmlFor="story">Description</Label>
+                <Input
+                  id="description"
+                  name="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Eg. A story about wizard written by J.K. Rowling."
+                />
+              </div>
+              <div className="flex gap-2 items-center">
+                <Switch
+                  id="public"
+                  checked={publicMode}
+                  onCheckedChange={setPublicMode}
+                />
+                <Label htmlFor="public">Public Mode</Label>
+              </div>
+              <p className="text-sm text-gray-500">
+                * If Public Mode is on, Everyone can see your story.{" "}
+              </p>
             </div>
             <DialogFooter>
               <ButtonLoading isLoading={isLoading} onClick={create}>
