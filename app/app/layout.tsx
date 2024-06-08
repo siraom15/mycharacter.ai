@@ -25,10 +25,10 @@ export default async function AppLayout({
   }
   return (
     <>
-      <Navbar isLoggedIn={!!user} />
-      <section className="grid grid-cols-5 min-h-screen border-t">
-        <Sidebar  className="col-span-1"/>
-        <div className="col-span-4 lg:col-span-4 lg:border-l">{children}</div>
+      {/* <Navbar isLoggedIn={!!user} /> */}
+      <section className="grid grid-cols-12 min-h-screen border-t">
+        <Sidebar  className="col-span-2"/>
+        <div className="col-span-10 lg:border-l">{children}</div>
       </section>
     </>
   );

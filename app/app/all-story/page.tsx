@@ -38,7 +38,7 @@ export default function AllStory() {
     <div className="p-4">
       <div className="flex items-center justify-between">
         <div className="space-y-1">
-          <h2 className="text-2xl font-semibold tracking-tight bg-gradient-to-r from-violet-400 to-pink-400 text-transparent bg-clip-text">All Stories</h2>
+          <h2 className="text-2xl font-semibold tracking-tight bg-gradient-to-r from-teal-400 to-yellow-400 text-transparent bg-clip-text">All Stories</h2>
           <p className="text-sm text-muted-foreground">
             Here you can see all the public stories on our website.
           </p>
