@@ -12,6 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { SupabaseImage } from "@/components/ui/supabase-image";
 import { useToast } from "@/components/ui/use-toast";
 import { Character, StoryWithProfile } from "@/interface";
+import { cn } from "@/lib/utils";
 import { createClient } from "@/utils/supabase/client";
 import {
   ChevronDoubleDownIcon,
@@ -29,10 +30,11 @@ import CountUp from "react-countup";
 export default function StoryPage({ params }: { params: { id: string } }) {
   const storyId = params.id;
   const [story, setStory] = useState<StoryWithProfile>();
-  const [characters, setCharacters] = useState<Character[]>();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
   const [canEdit, setCanEdit] = useState<boolean>(false);
+  const [saved, setSaved] = useState<boolean>(false);
+  const [upvoted, setUpvoted] = useState<boolean>(false);
   const router = useRouter();
   const supabase = createClient();
 
@@ -48,10 +50,76 @@ export default function StoryPage({ params }: { params: { id: string } }) {
     [storyId, supabase],
   );
 
-  const getStory = useCallback(async () => {
+  const editStory = async (
+    storyName: string,
+    description: string,
+    publicMode: boolean,
+  ) => {
+    try {
+      const { data, error } = await supabase
+        .from("stories")
+        .update({
+          name: storyName,
+          description: description,
+          is_public: publicMode,
+        })
+        .eq("id", storyId);
+      if (error) {
+        toast({
+          variant: "destructive",
+          title: "Error updating story",
+          description: "Please try again later.," + error.message,
+        });
+        return;
+      }
+      toast({
+        variant: "default",
+        title: "Story updated",
+        description: "The story has been updated successfully.",
+      });
+      await getStory();
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error updating story",
+        description: "Please try again later.",
+      });
+    }
+  };
+
+  const updateImage = async (newPath: string) => {
+    try {
+      const { data, error } = await supabase
+        .from("stories")
+        .update({
+          cover: newPath,
+        })
+        .eq("id", storyId);
+      if (error) {
+        toast({
+          variant: "destructive",
+          title: "Error updating image",
+          description: "Please try again later.," + error.message,
+        });
+        return;
+      }
+      toast({
+        variant: "default",
+        title: "Image updated",
+        description: "The story image has been updated successfully.",
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error updating image",
+        description: "Please try again later.",
+      });
+    }
+  };
+
+  const getStory = async () => {
     try {
       setIsLoading(true);
-
       const { data, error, status } = await supabase
         .from("stories")
         .select(`*, profiles(id, username), characters(*)`)
@@ -68,6 +136,13 @@ export default function StoryPage({ params }: { params: { id: string } }) {
         if (user && user.user?.id === data.owner) {
           setCanEdit(true);
         }
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Error fetching story",
+          description: "Please try again later.",
+        });
+        router.push("/app/all-story");
       }
     } catch (error) {
       toast({
@@ -79,11 +154,11 @@ export default function StoryPage({ params }: { params: { id: string } }) {
     } finally {
       setIsLoading(false);
     }
-  }, [storyId, supabase, toast, router]);
+  };
 
   useEffect(() => {
     getStory();
-  }, [getStory]);
+  }, []);
 
   return (
     <>
@@ -94,7 +169,7 @@ export default function StoryPage({ params }: { params: { id: string } }) {
           <div>
             <div className="flex gap-3 justify-between p-5 items-center">
               <div className="space-y-1">
-                <h2 className="text-6xl font-bold tracking-tight bg-gradient-to-r from-red-500 to-orange-500 text-transparent bg-clip-text">
+                <h2 className="text-6xl font-bold tracking-tight bg-gradient-to-r from-emerald-400 to-cyan-400 text-transparent bg-clip-text">
                   {story.name}
                 </h2>
                 <p className="text-sm">{story.description}</p>
@@ -104,31 +179,53 @@ export default function StoryPage({ params }: { params: { id: string } }) {
                     {story.profiles.username}
                   </span>
                   {canEdit && (
-                    <Badge className="bg-gradient-to-r from-red-500 to-orange-500 ml-2">
+                    <Badge className="bg-gradient-to-r from-emerald-400 to-cyan-400 ml-2">
                       You
                     </Badge>
                   )}{" "}
                 </div>
+                <div>
+                  Status:{" "}
+                  <Badge className="bg-gradient-to-r from-emerald-400 to-cyan-400">
+                    {story.is_public ? "Public" : "Private"}
+                  </Badge>
+                </div>
                 <p className="flex gap-2 items-center">
-                  <ChevronDoubleUpIcon className="h-5 w-5 text-blue-500" />
+                  <ChevronDoubleUpIcon className="h-5 w-5 text-emerald-400" />
                   Upvote: <CountUp end={story.likes} />
                 </p>
                 <p className="flex gap-2 items-center">
-                  <EyeIcon className="h-5 w-5 text-yellow-500" />
+                  <EyeIcon className="h-5 w-5 text-emerald-400" />
                   Views: <CountUp end={story.views} />
                 </p>
                 <div className="flex gap-2">
                   {canEdit ? (
-                    <StoryEditDialog story={story} />
+                    <StoryEditDialog story={story} editCallback={editStory} />
                   ) : (
                     <>
-                      <Button className="bg-gradient-to-r hover:bg-gradient-to-tr from-red-500 to-orange-500">
+                      <Button
+                        className={cn(
+                          "bg-gradient-to-r hover:bg-gradient-to-tr",
+                          upvoted
+                            ? " from-emerald-400 to-cyan-400"
+                            : "from-slate-300 to-slate-500",
+                        )}
+                        onClick={() => setUpvoted(!upvoted)}
+                      >
                         <ChevronDoubleUpIcon className="h-5 w-5" />
-                        Upvote
+                        {upvoted ? "Upvoted" : "Upvote"}
                       </Button>
-                      <Button className="bg-gradient-to-r hover:bg-gradient-to-tr from-red-500 to-orange-500">
+                      <Button
+                        className={cn(
+                          "bg-gradient-to-r hover:bg-gradient-to-tr",
+                          saved
+                            ? " from-emerald-400 to-cyan-400"
+                            : "from-slate-300 to-slate-500",
+                        )}
+                        onClick={() => setSaved(!saved)}
+                      >
                         <BookmarkFilledIcon className="h-5 w-5" />
-                        Save
+                        {saved ? "Saved" : "Save"}
                       </Button>
                     </>
                   )}
@@ -139,6 +236,8 @@ export default function StoryPage({ params }: { params: { id: string } }) {
                   url={story.cover}
                   width={150}
                   height={150}
+                  canUpdate={canEdit}
+                  updateCallback={updateImage}
                   aspectRatio="square"
                 />
               </div>

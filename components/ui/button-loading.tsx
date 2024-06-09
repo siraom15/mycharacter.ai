@@ -4,12 +4,12 @@ import { ArrowPathIcon } from "@heroicons/react/24/outline";
 interface ButtonLoadingProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 
 export function ButtonLoading({
   children,
-  isLoading,
+  isLoading=false,
   ...props
 }: ButtonLoadingProps) {
   return (

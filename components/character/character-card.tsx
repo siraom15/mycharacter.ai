@@ -17,6 +17,7 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { EyeIcon, ShareIcon } from "@heroicons/react/24/outline";
+import { SupabaseImage } from "../ui/supabase-image";
 
 export function CharacterCard({
   character,
@@ -29,20 +30,17 @@ export function CharacterCard({
   return (
     <div className={cn("space-y-3", className)} {...props}>
       <div className="overflow-hidden rounded-md">
-            <Image
-              src={character.cover}
-              alt={character.name}
-              width={width}
-              height={height}
-              className={cn(
-                "w-full object-cover transition-all hover:scale-105",
-                aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square"
-              )}
-            />
-          </div>
+        <SupabaseImage
+          url={character.cover}
+          width={width}
+          height={height}
+        />
+      </div>
       <div className="space-y-1 text-sm">
         <h3 className="font-medium leading-none">{character.name}</h3>
-        <p className="text-xs text-muted-foreground">{character.prompt.substring(0,100)+'...'}</p>
+        <p className="text-xs text-muted-foreground">
+          {character.prompt.substring(0, 100) + "..."}
+        </p>
       </div>
     </div>
   );

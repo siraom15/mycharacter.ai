@@ -25,69 +25,46 @@ import { Story } from "@/interface";
 
 interface StoryCreationDialogProp extends React.HTMLAttributes<HTMLDivElement> {
   story: Story;
+  editCallback: (
+    storyName: string,
+    description: string,
+    publicMode: boolean,
+  ) => void;
 }
 
 export function StoryEditDialog({
   story,
   className,
+  editCallback,
   ...props
 }: StoryCreationDialogProp) {
-  const [storyId, setStoryId] = useState<string>("");
-  const [storyName, setStoryName] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [publicMode, setPublicMode] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [storyId, setStoryId] = useState<string>(story.id);
+  const [storyName, setStoryName] = useState<string>(story.name);
+  const [description, setDescription] = useState<string>(story.description);
+  const [publicMode, setPublicMode] = useState<boolean>(story.is_public);
   const [open, setOpen] = useState<boolean>(false);
   const { toast } = useToast();
-  const router = useRouter();
 
-  // set initial value
-  useEffect(() => {
-    if (story) {
-      setStoryId(story.id);
-      setStoryName(story.name);
-      setDescription(story.description);
-      setPublicMode(story.is_public);
-    }
-  }, [story]);
-
-  const update = async () => {
-    setIsLoading(true);
+  const edit = async () => {
     if (!storyName || !description) {
       toast({
         title: "Fail to Create Story",
         description: "Please fill all fields.",
         variant: "destructive",
       });
-      setIsLoading(false);
       return;
     }
-    const { error, errorMessage } = await updateStory({
-      id: storyId,
-      name: storyName,
-      description,
-      is_public: publicMode,
-    });
-    if (error) {
-      toast({
-        title: "Fail to Create Story",
-        description: "Please try again later." + errorMessage,
-        variant: "destructive",
-      });
-    } else {
-      toast({
-        title: "Create Story Success",
-        description: "Story has been created",
-        variant: "default",
-      });
-      setOpen(false);
-    }
-    setIsLoading(false);
+    editCallback(storyName, description, publicMode);
+    setStoryName("");
+    setDescription("");
+    setPublicMode(false);
+    setOpen(false);
   };
+
   return (
     <Dialog open={open} onOpenChange={setOpen} {...props}>
       <DialogTrigger asChild>
-        <Button className="bg-gradient-to-r hover:bg-gradient-to-tr from-red-500 to-orange-500">
+        <Button className="bg-gradient-to-r hover:bg-gradient-to-tr from-teal-400 to-yellow-400">
           <PencilSquareIcon className="h-5 w-5" />
           Update
         </Button>
@@ -95,9 +72,7 @@ export function StoryEditDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Edit Story</DialogTitle>
-          <DialogDescription>
-            Update your story information.
-          </DialogDescription>
+          <DialogDescription>Update your story information.</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid gap-2">
@@ -133,7 +108,10 @@ export function StoryEditDialog({
           </p>
         </div>
         <DialogFooter>
-          <ButtonLoading isLoading={isLoading} onClick={update} className="bg-gradient-to-r hover:bg-gradient-to-tr from-red-500 to-orange-500">
+          <ButtonLoading
+            onClick={edit}
+            className="bg-gradient-to-r hover:bg-gradient-to-tr from-red-500 to-orange-500"
+          >
             Update Story
           </ButtonLoading>
         </DialogFooter>

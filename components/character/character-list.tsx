@@ -31,7 +31,7 @@ export const CharacterList = ({
   return (
     <>
       <div className="flex w-full justify-between items-center">
-        <h2 className="text-2xl font-semibold tracking-tight bg-gradient-to-r from-red-500 to-orange-500 text-transparent bg-clip-text">
+        <h2 className="text-2xl font-semibold tracking-tight bg-gradient-to-r from-emerald-400 to-cyan-400 text-transparent bg-clip-text">
           {filteredCharacters.length} Characters
         </h2>
         <div className="flex w-full max-w-sm items-center space-x-2 my-2">
@@ -43,7 +43,7 @@ export const CharacterList = ({
           />
           {search && (
             <Button
-              className=" bg-gradient-to-r from-red-500 to-orange-500 hover:bg-gradient-to-tr"
+              className=" bg-gradient-to-r from-emerald-400 to-cyan-400 hover:bg-gradient-to-tr"
               onClick={() => setSearch("")}
             >
               Clear

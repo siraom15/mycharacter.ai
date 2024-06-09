@@ -98,7 +98,7 @@ export function CharacterCreationDialog({
         </p>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button size="sm" className="relative bg-gradient-to-r hover:bg-gradient-to-tr from-red-500 to-orange-500">
+            <Button size="sm" className="relative bg-gradient-to-r hover:bg-gradient-to-tr from-teal-400 to-yellow-400">
               Create Character
             </Button>
           </DialogTrigger>
@@ -132,7 +132,7 @@ export function CharacterCreationDialog({
               </div>
             </div>
             <DialogFooter>
-              <ButtonLoading className="bg-gradient-to-r hover:bg-gradient-to-tr from-red-500 to-orange-500" isLoading={isLoading} onClick={create}>
+              <ButtonLoading className="bg-gradient-to-r hover:bg-gradient-to-tr from-teal-400 to-yellow-400" isLoading={isLoading} onClick={create}>
                 Create Character
               </ButtonLoading>
             </DialogFooter>

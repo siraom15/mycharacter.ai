@@ -17,8 +17,8 @@ export default function AllStory() {
       setIsLoading(true);
       const { data: storiesData, error: storiesError } = await supabase
         .from("stories")
-        .select(`*, profiles(id, username)`);
-
+        .select(`*, profiles(id, username)`)
+        .eq("is_public", true);
       if (storiesError) {
         setError(`Error fetching stories`);
       } else {
@@ -38,14 +38,20 @@ export default function AllStory() {
     <div className="p-4">
       <div className="flex items-center justify-between">
         <div className="space-y-1">
-          <h2 className="text-2xl font-semibold tracking-tight bg-gradient-to-r from-teal-400 to-yellow-400 text-transparent bg-clip-text">All Stories</h2>
+          <h2 className="text-2xl font-semibold tracking-tight bg-gradient-to-r from-teal-400 to-yellow-400 text-transparent bg-clip-text">
+            All Stories
+          </h2>
           <p className="text-sm text-muted-foreground">
             Here you can see all the public stories on our website.
           </p>
         </div>
       </div>
       <Separator className="my-4" />
-      <StoryList stories={stories} isLoading={isLoading} showCreateStory={false}/>
+      <StoryList
+        stories={stories}
+        isLoading={isLoading}
+        showCreateStory={false}
+      />
     </div>
   );
 }
