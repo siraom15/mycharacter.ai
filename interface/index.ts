@@ -1,5 +1,5 @@
 export type Story = {
-    id: string | number;
+    id: string;
     name: string;
     owner: string;
     likes: number;
@@ -18,11 +18,11 @@ export type StoryWithProfile = Story & {
 }
 
 export type Character = {
-    id: string | number;
+    id: string;
     name: string;
     prompt: string;
     cover: string;
-    // story: string;
+    story_id: string;
 }
 
 export type ResponseData = {
