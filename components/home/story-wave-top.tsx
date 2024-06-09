@@ -11,7 +11,7 @@ export function StoryWaveTop() {
       <defs>
         <linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0">
           <stop stopColor="#2dd4bf" offset="0%"></stop>
-          <stop stopColor="#000" offset="100%"></stop>
+          <stop stopColor="#fef08a" offset="100%"></stop>
         </linearGradient>
       </defs>
       <path

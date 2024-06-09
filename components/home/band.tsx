@@ -32,12 +32,12 @@ export function Band() {
           <div className="mt-11">
             <div className="flex text-sm gap-2">
               <Link href="/app/all-story">
-                <button className="flex justify-center items-center gap-2 px-7 py-4 text-lg leading-none text-teal-800 rounded-full bg-gradient-to-r from-teal-400 to-yellow-200 hover:bg-gradient-to-l font-semibold">
+                <button className="flex justify-center items-center gap-2 px-7 py-4 text-lg leading-none text-teal-800 rounded-full bg-gradient-to-r from-teal-400 to-yellow-200 hover:bg-gradient-to-tr font-semibold">
                   Explore Now
                 </button>
               </Link>
               <Link href="/app/all-story">
-                <button className="flex justify-center items-center gap-2 px-7 py-4 text-lg leading-none text-teal-800 rounded-full bg-gradient-to-r from-teal-400 to-yellow-200 hover:bg-gradient-to-l font-semibold">
+                <button className="flex justify-center items-center gap-2 px-7 py-4 text-lg leading-none text-teal-800 rounded-full bg-gradient-to-r from-teal-400 to-yellow-200 hover:bg-gradient-to-tr font-semibold">
                   Get Started
                 </button>
               </Link>
