@@ -3,11 +3,13 @@
 import { CharacterCard } from "@/components/character/character-card";
 import { CharacterList } from "@/components/character/character-list";
 import { GenerateCharacter } from "@/components/character/generate-character";
+import { StoryEditDialog } from "@/components/story/story-edit-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loading } from "@/components/ui/loading";
 import { Separator } from "@/components/ui/separator";
+import { SupabaseImage } from "@/components/ui/supabase-image";
 import { useToast } from "@/components/ui/use-toast";
 import { Character, StoryWithProfile } from "@/interface";
 import { createClient } from "@/utils/supabase/client";
@@ -16,6 +18,7 @@ import {
   ChevronDoubleUpIcon,
   EyeIcon,
   HandThumbUpIcon,
+  PencilSquareIcon,
 } from "@heroicons/react/24/outline";
 import { BookmarkFilledIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
@@ -41,7 +44,6 @@ export default function StoryPage({ params }: { params: { id: string } }) {
           views: toView,
         })
         .eq("id", storyId);
-      console.log(data, error, storyId);
     },
     [storyId, supabase],
   );
@@ -60,10 +62,7 @@ export default function StoryPage({ params }: { params: { id: string } }) {
         console.error(error);
         throw error;
       }
-
       if (data) {
-        let currentView = data.views;
-        await updateView(currentView + 1);
         setStory(data);
         const { data: user } = await supabase.auth.getUser();
         if (user && user.user?.id === data.owner) {
@@ -80,7 +79,7 @@ export default function StoryPage({ params }: { params: { id: string } }) {
     } finally {
       setIsLoading(false);
     }
-  }, [storyId, supabase, toast, router, updateView]);
+  }, [storyId, supabase, toast, router]);
 
   useEffect(() => {
     getStory();
@@ -93,9 +92,9 @@ export default function StoryPage({ params }: { params: { id: string } }) {
       ) : (
         story && (
           <div>
-            <div className="flex gap-3 justify-between p-5">
+            <div className="flex gap-3 justify-between p-5 items-center">
               <div className="space-y-1">
-                <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-red-500 to-orange-500 text-transparent bg-clip-text">
+                <h2 className="text-6xl font-bold tracking-tight bg-gradient-to-r from-red-500 to-orange-500 text-transparent bg-clip-text">
                   {story.name}
                 </h2>
                 <p className="text-sm">{story.description}</p>
@@ -119,23 +118,30 @@ export default function StoryPage({ params }: { params: { id: string } }) {
                   Views: <CountUp end={story.views} />
                 </p>
                 <div className="flex gap-2">
-                  <Button className="bg-gradient-to-r hover:bg-gradient-to-tr from-red-500 to-orange-500">
-                    <ChevronDoubleUpIcon className="h-5 w-5" />
-                    Upvote
-                  </Button>
-                  <Button className="bg-gradient-to-r hover:bg-gradient-to-tr from-teal-400 to-yellow-400">
-                    <BookmarkFilledIcon className="h-5 w-5" />
-                    Save
-                  </Button>
+                  {canEdit ? (
+                    <StoryEditDialog story={story} />
+                  ) : (
+                    <>
+                      <Button className="bg-gradient-to-r hover:bg-gradient-to-tr from-red-500 to-orange-500">
+                        <ChevronDoubleUpIcon className="h-5 w-5" />
+                        Upvote
+                      </Button>
+                      <Button className="bg-gradient-to-r hover:bg-gradient-to-tr from-red-500 to-orange-500">
+                        <BookmarkFilledIcon className="h-5 w-5" />
+                        Save
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
-              <Image
-                src={story.cover}
-                alt={story.name}
-                width={300}
-                height={300}
-                className="h-auto w-44 object-cover transition-all hover:scale-105 rounded-sm shadow-white shadow border-2 border-white"
-              />
+              <div className="w-1/3">
+                <SupabaseImage
+                  url={story.cover}
+                  width={150}
+                  height={150}
+                  aspectRatio="square"
+                />
+              </div>
             </div>
             <div className="w-full">
               <ChevronDoubleDownIcon className="h-5 w-5 mx-auto text-gray-500 animate-bounce" />

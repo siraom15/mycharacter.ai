@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/context-menu";
 import { EyeIcon, ShareIcon } from "@heroicons/react/24/outline";
 import { Story, StoryWithProfile } from "@/interface";
+import { SupabaseImage } from "../ui/supabase-image";
 
 interface StoryCardProps extends React.HTMLAttributes<HTMLDivElement> {
   story: StoryWithProfile;
@@ -38,18 +39,12 @@ export function StoryCard({
     <div className={cn("space-y-3", className)} {...props}>
       <ContextMenu>
         <ContextMenuTrigger>
-          <div className="overflow-hidden rounded-md">
-            <Image
-              src={story.cover}
-              alt={story.name}
-              width={width}
-              height={height}
-              className={cn(
-                "object-cover transition-all hover:scale-105 w-full",
-                aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square",
-              )}
-            />
-          </div>
+          <SupabaseImage
+            url={story.cover}
+            width={width}
+            height={height}
+            aspectRatio={aspectRatio}
+          />
         </ContextMenuTrigger>
         <ContextMenuContent className="w-40">
           <ContextMenuItem>
