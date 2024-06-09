@@ -4,7 +4,7 @@ import { Navbar } from "@/components/ui/navbar";
 import { Toaster } from "@/components/ui/toaster";
 import { Prompt, Montserrat, Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { createClient } from "@/utils/supabase/server";
+import NextTopLoader from 'nextjs-toploader';
 
 export const metadata: Metadata = {
   title: "MyCharacter.AI",
@@ -29,15 +29,21 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const supabase = createClient();
-
-  // const {
-  //   data: { user },
-  // } = await supabase.auth.getUser();
 
   return (
     <html lang="en">
       <body className={cn("min-h-screen")}>
+        <NextTopLoader
+          color="#2dd4bf"
+          initialPosition={0.08}
+          crawlSpeed={200}
+          height={3}
+          crawl={true}
+          showSpinner={true}
+          easing="ease"
+          speed={200}
+          shadow="0 0 10px #fef08a,0 0 5px #fef08a"
+        />
         <main>
           {/* <Navbar isLoggedIn={!!user} /> */}
           {children}
