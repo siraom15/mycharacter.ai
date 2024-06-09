@@ -6,7 +6,6 @@ import { CharacterCard } from "./character-card";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Loading } from "../ui/loading";
-import { StoryCreationDialog } from "../story/story-creation-dialog";
 import { EmptyPlaceholder } from "../ui/empty-placeholder";
 import { CharacterCreationDialog } from "./character-creation-dialog";
 

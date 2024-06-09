@@ -12,27 +12,26 @@ export default function MyStory() {
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchStories = async () => {
+    setIsLoading(true);
+    const { data: userData, error: userError } = await supabase.auth.getUser();
+    if (userError) {
+    }
+    const { data: storiesData, error: storiesError } = await supabase
+      .from("stories")
+      .select("*, profiles(*)")
+      .eq("owner", userData.user?.id)
+      .order("created_at", { ascending: true });
+
+    if (storiesError) {
+      setError(`Error fetching stories: ${storiesError.message}`);
+    } else {
+      setStories(storiesData);
+    }
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    const fetchStories = async () => {
-      setIsLoading(true);
-      const { data: userData, error: userError } =
-        await supabase.auth.getUser();
-      if (userError) {
-      }
-      const { data: storiesData, error: storiesError } = await supabase
-        .from("stories")
-        .select("*, profiles(*)")
-        .eq("owner", userData.user?.id)
-        .order("created_at", { ascending: true });
-
-      if (storiesError) {
-        setError(`Error fetching stories: ${storiesError.message}`);
-      } else {
-        setStories(storiesData);
-      }
-      setIsLoading(false);
-    };
-
     fetchStories();
   }, [supabase]);
 

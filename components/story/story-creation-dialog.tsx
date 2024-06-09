@@ -38,39 +38,44 @@ export function StoryCreationDialog({
   const router = useRouter();
 
   const create = async () => {
-    setIsLoading(true);
-    if (!storyName || !description) {
-      toast({
-        title: "Fail to Create Story",
-        description: "Please fill all fields.",
-        variant: "destructive",
+    try {
+      setIsLoading(true);
+      if (!storyName || !description) {
+        toast({
+          title: "Fail to Create Story",
+          description: "Please fill all fields.",
+          variant: "destructive",
+        });
+        setIsLoading(false);
+        return;
+      }
+      const { error, errorMessage, data } = await createStory({
+        name: storyName,
+        description,
+        is_public: publicMode,
       });
+      if (!error) {
+        toast({
+          title: "Create Story Success",
+          description: "Story has been created",
+          variant: "default",
+        });
+        setOpen(false);
+        router.push(`/app/story/${data?.id}`);
+      } else {
+        toast({
+          title: "Fail to Create Story",
+          description: "Please try again later." + errorMessage,
+          variant: "destructive",
+        });
+      }
+      setStoryName("");
+      setDescription("");
+      setPublicMode(false);
       setIsLoading(false);
-      return;
+    } catch (e) {
+      console.log(e);
     }
-    const { error, errorMessage } = await createStory({
-      name: storyName,
-      description,
-      is_public: publicMode,
-    });
-    if (error) {
-      toast({
-        title: "Fail to Create Story",
-        description: "Please try again later." + errorMessage,
-        variant: "destructive",
-      });
-    } else {
-      toast({
-        title: "Create Story Success",
-        description: "Story has been created",
-        variant: "default",
-      });
-      setOpen(false);
-      // refresh
-      router.refresh();
-    }
-    setStoryName("");
-    setIsLoading(false);
   };
   return (
     <div
@@ -89,7 +94,10 @@ export function StoryCreationDialog({
         </p>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button size="sm" className="relative">
+            <Button
+              size="sm"
+              className="relative bg-gradient-to-r from-teal-400 to-yellow-400 hover:bg-gradient-to-tr"
+            >
               Create Story
             </Button>
           </DialogTrigger>
