@@ -110,7 +110,7 @@ export function StoryEditDialog({
         <DialogFooter>
           <ButtonLoading
             onClick={edit}
-            className="bg-gradient-to-r hover:bg-gradient-to-tr from-red-500 to-orange-500"
+            className="bg-gradient-to-r hover:bg-gradient-to-tr from-teal-400 to-yellow-400"
           >
             Update Story
           </ButtonLoading>
