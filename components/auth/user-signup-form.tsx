@@ -24,12 +24,12 @@ export function UserSignupForm({ className, ...props }: UserAuthFormProps) {
   const formSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    const { errorMessage } = await signup(new FormData(e.currentTarget));
-    if (errorMessage) {
+    const result = await signup(new FormData(e.currentTarget));
+    if (result?.errorMessage) {
       toast({
         variant: "destructive",
         title: "Error",
-        description: errorMessage,
+        description: result.errorMessage,
       });
     } else {
       toast({
