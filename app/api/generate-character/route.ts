@@ -39,7 +39,6 @@ export async function POST(request: NextRequest, response: NextResponse<Response
         });
 
         const result = await response.json();
-        console.log(result);
         const image = result.images[0];
         return NextResponse.json({ message: "OK", image }, { status: 200 });
     } catch (error) {
