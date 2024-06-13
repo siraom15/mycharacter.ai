@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
+import { cn, parseBase64Image } from "@/lib/utils";
 import { ListBulletIcon } from "@heroicons/react/24/outline";
 import { PlusCircledIcon, PlusIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
@@ -21,6 +21,8 @@ import { createStory } from "@/app/app/my-story/action";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
 import { createCharacterToStory } from "@/app/app/story/[id]/action";
+import Image from "next/image";
+import { Separator } from "../ui/separator";
 
 interface CharacterCreationDialogProp
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -36,6 +38,10 @@ export function CharacterCreationDialog({
   const [prompt, setPrompt] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
+  const [disable, setDisable] = useState<boolean>(false);
+  const [firstTime, setFirstTime] = useState<boolean>(true);
+  const [generatedImage, setGeneratedImage] = useState<string>("");
+
   const { toast } = useToast();
   const router = useRouter();
 
@@ -43,19 +49,50 @@ export function CharacterCreationDialog({
     setName("");
     setPrompt("");
     setIsLoading(false);
-  }
+  };
 
-  const create = async () => {
-    setIsLoading(true);
-    if(!name || !prompt) {
+  const generateImage = async () => {
+    if (!name || !prompt) {
       toast({
         title: "Fail to Create Character",
         description: "Please fill all fields.",
         variant: "destructive",
       });
-      setIsLoading(false);
       return;
     }
+
+    setIsLoading(true);
+    try {
+      const response = await fetch("/api/generate-character", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt }),
+      });
+      if (!response.ok) {
+        throw new Error("Fail to generate character");
+      }
+      const { image } = await response.json();
+      toast({
+        title: "Generate Character Success",
+        description: "Character has been generated",
+        variant: "default",
+      });
+      setGeneratedImage(image);
+      setFirstTime(false);
+    } catch (error) {
+      toast({
+        title: "Fail to Generate Character",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const create = async () => {
     const { error, errorMessage } = await createCharacterToStory({
       name,
       prompt,
@@ -75,7 +112,7 @@ export function CharacterCreationDialog({
       });
       setOpen(false);
       // refresh
-      router.refresh();
+      router.push(`/app/story/${storyId}`);
     }
     setName("");
     setPrompt("");
@@ -98,7 +135,10 @@ export function CharacterCreationDialog({
         </p>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button size="sm" className="relative bg-gradient-to-r hover:bg-gradient-to-tr from-teal-400 to-yellow-400">
+            <Button
+              size="sm"
+              className="relative bg-gradient-to-r hover:bg-gradient-to-tr from-teal-400 to-yellow-400"
+            >
               Create Character
             </Button>
           </DialogTrigger>
@@ -111,6 +151,20 @@ export function CharacterCreationDialog({
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
+                {generatedImage ? (
+                  <Image
+                    className="rounded-lg mx-auto w-full"
+                    src={parseBase64Image(generatedImage)}
+                    alt="generated image"
+                    width={300}
+                    height={300}
+                  />
+                ) : (
+                  <div className="rounded-lg mx-auto w-full h-[300px] bg-gray-100 flex items-center align-middle"></div>
+                )}
+              </div>
+              {/* <Separator /> */}
+              <div className="grid gap-2">
                 <Label htmlFor="story">Character Name</Label>
                 <Input
                   id="story"
@@ -118,6 +172,7 @@ export function CharacterCreationDialog({
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Eg. Harry Potter"
+                  disabled={disable}
                 />
               </div>
               <div className="grid gap-2">
@@ -128,13 +183,30 @@ export function CharacterCreationDialog({
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   placeholder="Eg. A young wizard."
+                  disabled={disable}
                 />
               </div>
             </div>
-            <DialogFooter>
-              <ButtonLoading className="bg-gradient-to-r hover:bg-gradient-to-tr from-teal-400 to-yellow-400" isLoading={isLoading} onClick={create}>
-                Create Character
+            <DialogFooter className="gap-2">
+              <ButtonLoading
+                className="bg-gradient-to-r hover:bg-gradient-to-tr from-teal-400 to-yellow-400"
+                isLoading={isLoading}
+                onClick={generateImage}
+              >
+                {isLoading
+                  ? "Generating..."
+                  : firstTime
+                  ? "Create Character"
+                  : "Regenerate"}
               </ButtonLoading>
+              {!firstTime && !isLoading && (
+                <ButtonLoading
+                  className="bg-gradient-to-r hover:bg-gradient-to-tr from-teal-400 to-yellow-400"
+                  // onClick={create}
+                >
+                  Select This Image
+                </ButtonLoading>
+              )}
             </DialogFooter>
           </DialogContent>
         </Dialog>

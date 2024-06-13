@@ -38,7 +38,6 @@ export function StoryEditDialog({
   editCallback,
   ...props
 }: StoryCreationDialogProp) {
-  const [storyId, setStoryId] = useState<string>(story.id);
   const [storyName, setStoryName] = useState<string>(story.name);
   const [description, setDescription] = useState<string>(story.description);
   const [publicMode, setPublicMode] = useState<boolean>(story.is_public);
@@ -98,6 +97,7 @@ export function StoryEditDialog({
           <div className="flex gap-2 items-center">
             <Switch
               id="public"
+              className="data-[state=checked]:bg-teal-400"
               checked={publicMode}
               onCheckedChange={setPublicMode}
             />

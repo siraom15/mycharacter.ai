@@ -56,7 +56,7 @@ export default function StoryPage({ params }: { params: { id: string } }) {
     publicMode: boolean,
   ) => {
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("stories")
         .update({
           name: storyName,
@@ -117,7 +117,7 @@ export default function StoryPage({ params }: { params: { id: string } }) {
     }
   };
 
-  const getStory = async () => {
+  const getStory = useCallback(async () => {
     try {
       setIsLoading(true);
       const { data, error, status } = await supabase
@@ -154,11 +154,11 @@ export default function StoryPage({ params }: { params: { id: string } }) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [router, storyId, supabase, toast]);
 
   useEffect(() => {
     getStory();
-  }, []);
+  }, [getStory]);
 
   return (
     <>
