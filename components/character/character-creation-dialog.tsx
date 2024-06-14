@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { cn, parseBase64Image } from "@/lib/utils";
+import { base64ToImageFile, cn, parseBase64Image } from "@/lib/utils";
 import { ListBulletIcon } from "@heroicons/react/24/outline";
 import { PlusCircledIcon, PlusIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation";
 import { createCharacterToStory } from "@/app/app/story/[id]/action";
 import Image from "next/image";
 import { Separator } from "../ui/separator";
+import { uploadImage } from "@/utils/supabase/image";
 
 interface CharacterCreationDialogProp
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -45,10 +46,19 @@ export function CharacterCreationDialog({
   const { toast } = useToast();
   const router = useRouter();
 
+  const handleDialog = (state: boolean) => {
+    resetState();
+    setOpen(state);
+  };
+
   const resetState = () => {
     setName("");
     setPrompt("");
     setIsLoading(false);
+    setOpen(false);
+    setDisable(false);
+    setFirstTime(true);
+    setGeneratedImage("");
   };
 
   const generateImage = async () => {
@@ -70,10 +80,13 @@ export function CharacterCreationDialog({
         },
         body: JSON.stringify({ prompt }),
       });
+
       if (!response.ok) {
         throw new Error("Fail to generate character");
       }
+
       const { image } = await response.json();
+
       toast({
         title: "Generate Character Success",
         description: "Character has been generated",
@@ -93,30 +106,59 @@ export function CharacterCreationDialog({
   };
 
   const create = async () => {
-    const { error, errorMessage } = await createCharacterToStory({
-      name,
-      prompt,
-      storyId,
-    });
-    if (error) {
+    try {
+      // Upload image to supabae bucket
+      setIsLoading(true);
+      const fileName = name + new Date().getTime();
+      const fileExt = "png";
+      const filePath = `${fileName}.${fileExt}`;
+      const file = base64ToImageFile(generatedImage, fileName);
+      if (!file) {
+        toast({
+          title: "Fail to Create Character",
+          description: "Please try again later.",
+          variant: "destructive",
+        });
+      }
+
+      await uploadImage({
+        bucket_name: "images",
+        filePath,
+        file,
+      });
+
+      const { error, errorMessage } = await createCharacterToStory({
+        name,
+        prompt,
+        storyId,
+        cover: filePath,
+      });
+      if (error) {
+        toast({
+          title: "Fail to Create Character",
+          description: "Please try again later." + errorMessage,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Create Character Success",
+          description: "Character has been created",
+          variant: "default",
+        });
+        setOpen(false);
+        // refresh
+        router.push(`/app/story/${storyId}`);
+      }
+    } catch (error) {
+      console.log(error);
       toast({
         title: "Fail to Create Character",
-        description: "Please try again later." + errorMessage,
+        description: "Please try again later.",
         variant: "destructive",
       });
-    } else {
-      toast({
-        title: "Create Character Success",
-        description: "Character has been created",
-        variant: "default",
-      });
-      setOpen(false);
-      // refresh
-      router.push(`/app/story/${storyId}`);
+    } finally {
+      resetState();
     }
-    setName("");
-    setPrompt("");
-    setIsLoading(false);
   };
   return (
     <div
@@ -133,7 +175,7 @@ export function CharacterCreationDialog({
         <p className="mb-4 mt-2 text-sm text-muted-foreground">
           Create a character to this story.
         </p>
-        <Dialog open={open} onOpenChange={setOpen}>
+        <Dialog open={open} onOpenChange={handleDialog}>
           <DialogTrigger asChild>
             <Button
               size="sm"
@@ -160,7 +202,12 @@ export function CharacterCreationDialog({
                     height={300}
                   />
                 ) : (
-                  <div className="rounded-lg mx-auto w-full h-[300px] bg-gray-100 flex items-center align-middle"></div>
+                  <div
+                    className={cn(
+                      isLoading && "animate-pulse",
+                      "rounded-lg mx-auto w-full h-[300px] bg-gray-100 flex items-center align-middle",
+                    )}
+                  ></div>
                 )}
               </div>
               {/* <Separator /> */}
@@ -196,13 +243,13 @@ export function CharacterCreationDialog({
                 {isLoading
                   ? "Generating..."
                   : firstTime
-                  ? "Create Character"
+                  ? "Generate Character"
                   : "Regenerate"}
               </ButtonLoading>
               {!firstTime && !isLoading && (
                 <ButtonLoading
                   className="bg-gradient-to-r hover:bg-gradient-to-tr from-teal-400 to-yellow-400"
-                  // onClick={create}
+                  onClick={create}
                 >
                   Select This Image
                 </ButtonLoading>
