@@ -6,13 +6,14 @@ interface StoryCreationProps {
     name: string;
     prompt: string;
     storyId: string;
+    cover: string;
 }
 interface StoryCreationResult {
     error: boolean;
     errorMessage?: string;
 }
 
-export async function createCharacterToStory({ name, prompt, storyId }: StoryCreationProps): Promise<StoryCreationResult> {
+export async function createCharacterToStory({ name, prompt, storyId, cover }: StoryCreationProps): Promise<StoryCreationResult> {
     const supabase = createClient();
 
     try {
@@ -20,6 +21,7 @@ export async function createCharacterToStory({ name, prompt, storyId }: StoryCre
             name,
             prompt,
             story_id: storyId,
+            cover,
         };
         console.log(data);
 
